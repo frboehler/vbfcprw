@@ -7,7 +7,7 @@ BOOST=-L$(ALRB_BOOST_ROOT)/lib/-lboost_filesystem
 
 all: bin/testCPRW
 
-bin/testCPRW: src/testCPRW.cxx
+bin/testCPRW: testCPRW.cxx
 	mkdir -p bin
 	$(LD) $(CXXFLAGS) $(shell rc get_cxxflags) $^ $(shell rc get_all_ldflags) -lweightandoptobs -lgfortran -o $@ 
 
