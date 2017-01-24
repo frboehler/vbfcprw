@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "Compiling weightandobs.f"
+mkdir -p $ROOTCOREBIN/obj/$ROOTCORECONFIG/
+gfortran -shared -u -Wall -fPIC -O -o $ROOTCOREBIN/lib/$ROOTCORECONFIG/libweightandoptobs.so $ROOTCOREBIN/../HLeptonsCPRW/Root/weightandoptobs.f $ROOTCOREBIN/../HLeptonsCPRW/Root/hawkroutines.f
