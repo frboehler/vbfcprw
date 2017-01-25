@@ -1,5 +1,5 @@
 This is a RootCore-compliant wrapper around Fortran-routines written by M. Schumacher using routines from hawk (https://hawk.hepforge.org). 
-The header has three functions in the namespace HLeptonsCPRW:
+The header (HLeptonsCPRW/WeightAndOptObsWrapper.h) has three functions in the namespace HLeptonsCPRW:
 
 -  double getReweight(double ecm, double mH, int ipara, double rsmin, 
    double din, double dbin, double dtin, double dtbin, double lambdahvvin, 
@@ -76,7 +76,7 @@ The header has three functions in the namespace HLeptonsCPRW:
      
   ===================================================
    
-- std::pair<double,double> getOptObs(double ecm,double mH,double x1,double x2,double pdf1,double pdf2, double* pjet1, double* pjet2, double* phiggs);
+- std::pair<double,double> getOptObs(double ecm,double mH,double x1,double x2,double pdf1,double pdf2, double *pjet1, double *pjet2, double *phiggs);
     
     the inputs are:
              ecms proton-pton center-of mass energy in GeV 
