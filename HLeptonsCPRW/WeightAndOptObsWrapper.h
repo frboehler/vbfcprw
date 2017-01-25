@@ -1,3 +1,11 @@
+/*
+|-------------------------------------
+| Wrapper to calculate events weights and optimal observable. Using Fortran routines written by M. Schumacher (markus.schumacher@cern.ch).
+| 2017/01/25
+| Felix Bührer (felix.buehrer@cern.ch)
+|-------------------------------------
+*/
+
 #ifndef __HLEPTONSCPRW__
 #include<utility>
 
