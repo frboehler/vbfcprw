@@ -1,6 +1,8 @@
 This is a RootCore-compliant wrapper around Fortran-routines written by M. Schumacher using routines from hawk (https://hawk.hepforge.org). 
 The header (HLeptonsCPRW/WeightAndOptObsWrapper.h) has three functions in the namespace HLeptonsCPRW:
 
+
+
 -  double getReweight(double ecm, double mH, int ipara, double rsmin, 
    double din, double dbin, double dtin, double dtbin, double lambdahvvin, 
    double a1hwwin, double a2hwwin, double a3hwwin, double a1haain, double a2haain, double a3haain, 
@@ -39,6 +41,8 @@ The header (HLeptonsCPRW/WeightAndOptObsWrapper.h) has three functions in the na
   
   returning a single event weight to reweight from SM to the chosen parameters.
   
+
+
    
 - std::pair<double,double> getWeightsDtilde(double ecm, double mH,int npafin, int ifl1in,int ifl2in,int ifl1out, int ifl2out, int ifl3out, double x1, double x2, double* pjet1, double *pjet2, double *pjet3, double *phiggs);
   
@@ -67,8 +71,10 @@ The header (HLeptonsCPRW/WeightAndOptObsWrapper.h) has three functions in the na
 returning a pair (wedtlin,wedtquad) which are the contributions to the event weight. The event weight is decomposed as weight = 1 + dtilde wedtline + dtilde^2 wedtquad. 
 The weight is calculated under the assumption dtilde=detilde_b and all other anomalous couplings/ Wilson coefficients asumed to vanish.
      
-  ===================================================
    
+
+
+
 - std::pair<double,double> getOptObs(double ecm,double mH,double x1,double x2,double pdf1,double pdf2, double *pjet1, double *pjet2, double *phiggs);
 
   the inputs are:
