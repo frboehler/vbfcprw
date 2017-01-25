@@ -39,11 +39,11 @@ The header (HLeptonsCPRW/WeightAndOptObsWrapper.h) has three functions in the na
   
   returning a single event weight to reweight from SM to the chosen parameters.
   
-  ===================================================
    
 - std::pair<double,double> getWeightsDtilde(double ecm, double mH,int npafin, int ifl1in,int ifl2in,int ifl1out, int ifl2out, int ifl3out, double x1, double x2, double* pjet1, double *pjet2, double *pjet3, double *phiggs);
   
   the inputs are:
+
     - ecms proton-proton center-of mass energy in GeV 
     - mhiggs mass of Higgs boson in Gev
     - npafin:   number of partons in final state  either  2 or 3 
@@ -72,6 +72,7 @@ The weight is calculated under the assumption dtilde=detilde_b and all other ano
 - std::pair<double,double> getOptObs(double ecm,double mH,double x1,double x2,double pdf1,double pdf2, double *pjet1, double *pjet2, double *phiggs);
 
   the inputs are:
+
     - ecms proton-pton center-of mass energy in GeV 
     - mhiggs mass of Higgs boson in GeV
     - 1st incoming parton in positive z direction
