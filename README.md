@@ -77,7 +77,7 @@ The header (HLeptonsCPRW/WeightAndOptObsWrapper.h) has three functions in the na
   ===================================================
    
 - std::pair<double,double> getOptObs(double ecm,double mH,double x1,double x2,double pdf1,double pdf2, double *pjet1, double *pjet2, double *phiggs);
-    
+ 
     the inputs are:
              ecms proton-pton center-of mass energy in GeV 
              mhiggs mass of Higgs boson in GeV
@@ -89,4 +89,4 @@ The header (HLeptonsCPRW/WeightAndOptObsWrapper.h) has three functions in the na
              pjet1(0:3):  E,px,py,pz of 2nd outgoing jet
              phiggs(0:3): E,px,py,pz of Higgs boson
     
-    returning a pair (oo1,oo2) which are the optimal observables of 1st and 2nd order.
+returning a pair (oo1,oo2) which are the optimal observables of 1st and 2nd order.
