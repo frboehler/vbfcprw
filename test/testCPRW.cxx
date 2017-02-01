@@ -24,6 +24,7 @@ int main(int argc, char* argv[])
   int flavour3Out = 1;
   bool useEventStore = false;
   bool silent = false;
+  bool useNewEvent = false;
   int iterations = 1;
 
   std::pair<double,double> oo, weights;
@@ -32,6 +33,7 @@ int main(int argc, char* argv[])
   {   
     if (TString(argv[i]).Contains("--useEventStore")) useEventStore = true;
     if (TString(argv[i]).Contains("--silent")) silent = true;
+    if (TString(argv[i]).Contains("--useNewEvent")) useNewEvent = true;
     if (TString(argv[i]) == "-i") iterations = atoi(argv[i+1]);
   }
   if (useEventStore)
@@ -49,6 +51,10 @@ int main(int argc, char* argv[])
       std::cout<<"Running iteration "<<i<<std::endl;
     if (useEventStore)
     {
+      if (useNewEvent)
+      {
+        ooES.setEventNumber(345152+i);
+      }
 
       if (!silent)
       {
