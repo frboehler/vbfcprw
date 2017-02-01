@@ -1,4 +1,4 @@
-#include "HLeptonsCPRW/WeightAndOptObsWrapper.h"
+#include "HLeptonsCPRW/OptObsEventStore.h"
 #include<iostream>
 
 int main()
@@ -31,6 +31,86 @@ int main()
   std::cout<<"Calling getOptObs(...)! Results are: "<<
   oo.first<<" , "<<oo.second<<std::endl;
 
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
+  oo = HLeptonsCPRW::getOptObs(ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  oo.first<<" , "<<oo.second<<std::endl;
+
   std::cout<<"Calling getReweight(...)! Result is: "<<
   HLeptonsCPRW::getReweight(ecm, mH, 1 , 
   0.5, 0.5, 0.5, 0.5, 0.5, //rsmin,din,dbin,dtin,dtbin
@@ -42,5 +122,35 @@ int main()
   npafin,flavour1In,flavour2In,flavour1Out,flavour2Out,flavour3Out,
   x1,x2,pjet1,pjet2,pjet3,phiggs)
   <<std::endl;
+
+  std::cout<<"Now trying to use the EventStore"<<std::endl;
+  OptObsEventStore ooES;
+  ooES.setEventNumber(345152);
+
+  std::cout<<"Calling getWeightsDtilde(...)! Results are: "<<
+  ooES.getWeightsDtilde(0, ecm, mH , npafin,flavour1In,flavour2In,flavour1Out,flavour2Out,flavour3Out,x1,x2,pjet1,pjet2,pjet3,phiggs)
+  << " , " <<
+  ooES.getWeightsDtilde(1, ecm, mH , npafin,flavour1In,flavour2In,flavour1Out,flavour2Out,flavour3Out,x1,x2,pjet1,pjet2,pjet3,phiggs)
+  <<std::endl;
+
+  std::cout<<"Calling getOptObs(...)! Results are: "<<
+  ooES.getOptObs(0,ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs)
+  << " , " <<
+  ooES.getOptObs(1,ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs)
+  <<std::endl;
+
+  std::cout<<"Calling getReweight(...)! Result is: "<<
+  ooES.getReweight(ecm, mH, 1 , 
+  0.5, 0.5, 0.5, 0.5, 0.5, //rsmin,din,dbin,dtin,dtbin
+  0.5, 0.5, 0.5,           //a1hwwin,a2hwwin,a3hwwin
+  0.5, 0.5, 0.5,           //a1haain,a2haain,a3haain
+  0.5, 0.5, 0.5,           //a1hazin,a2hazin,a3hazin
+  0.5, 0.5, 0.5,           //a1hzzin,a2hzzin,a3hzzin
+  0.5,                     //lambdahvvin for formfactor if set to positive value
+  npafin,flavour1In,flavour2In,flavour1Out,flavour2Out,flavour3Out,
+  x1,x2,pjet1,pjet2,pjet3,phiggs)
+  <<std::endl;
+
+
   return 1;
 }

@@ -7,7 +7,9 @@
 */
 
 #ifndef __HLEPTONSCPRW__
+#define __HLEPTONSCPRW__
 #include<utility>
+#include<iostream>
 
 namespace HLeptonsCPRW {
   double getReweight(double ecm, double mH, int ipara, double rsmin, 
@@ -18,5 +20,7 @@ namespace HLeptonsCPRW {
   double x1, double x2, double *pjet1, double *pjet2, double *pjet3, double *phiggs);
   std::pair<double,double> getWeightsDtilde(double ecm, double mH,int npafin, int ifl1in,int ifl2in,int ifl1out, int ifl2out, int ifl3out, double x1, double x2, double* pjet1, double *pjet2, double *pjet3, double *phiggs);
   std::pair<double,double> getOptObs(double ecm,double mH,double x1,double x2,double pdf1,double pdf2, double* pjet1, double* pjet2, double* phiggs);
+
 }
+
 #endif

@@ -1,7 +1,7 @@
 #ifndef __HLEPTONSCPRWDICT__
 #define __HLEPTONSCPRWDICT__
 
-#include "HLeptonsCPRW/WeightAndOptObsWrapper.h"
+#include "HLeptonsCPRW/OptObsEventStore.h"
 
 #ifdef __CINT__
 
@@ -13,6 +13,7 @@
 
 
 #pragma link C++ namespace HLeptonsCPRW;
+#pragma link C++ class OptObsEventStore;
 
 #endif
 
