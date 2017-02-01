@@ -1,6 +1,7 @@
 #ifndef __OPTOBSEVENTSTORE__
 #define __OPTOBSEVENTSTORE__
 #include "HLeptonsCPRW/WeightAndOptObsWrapper.h"
+#include "TString.h"
 
 class OptObsEventStore {
   private:
@@ -67,6 +68,8 @@ class OptObsEventStore {
       return -1234;
     }
   }
+
+  void initPDFSet(std::string,int,double);
 };
 /*};*/
 /*{*/
