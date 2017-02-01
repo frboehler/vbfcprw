@@ -75,7 +75,7 @@ The weight is calculated under the assumption dtilde=detilde_b and all other ano
 
 
 
-- std::pair<double,double> getOptObs(double ecm,double mH,double x1,double x2,double pdf1,double pdf2, double *pjet1, double *pjet2, double *phiggs);
+- std::pair<double,double> getOptObs(double ecm,double mH,double x1,double x2,double *pdf1,double *pdf2, double *pjet1, double *pjet2, double *phiggs);
 
   the inputs are:
 
@@ -84,7 +84,7 @@ The weight is calculated under the assumption dtilde=detilde_b and all other ano
     - 1st incoming parton in positive z direction
     - 2nd incoming parton in negative z direction
     - x1, x2: Bjorken x of 1st and 2ns incoming partons
-    - pdf1,pdf2 from -6 to 6: pdfs for 1st and 2nd parton
+    - pdf1(0:12),pdf2(0:12) from -6 to 6: pdfs for 1st and 2nd parton
     - pjet1(0:3):  E,px,py,pz of 1st outgoing jet
     - pjet1(0:3):  E,px,py,pz of 2nd outgoing jet
     - phiggs(0:3): E,px,py,pz of Higgs boson

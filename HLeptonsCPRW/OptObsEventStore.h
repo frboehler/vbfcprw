@@ -48,7 +48,7 @@ class OptObsEventStore {
       return -1234;
     }
   }
-  double getOptObs(int entry, double ecm,double mH,double x1,double x2,double pdf1,double pdf2, double* pjet1, double* pjet2, double* phiggs)
+  double getOptObs(int entry, double ecm,double mH,double x1,double x2,double *pdf1,double *pdf2, double* pjet1, double* pjet2, double* phiggs)
   {
     if (m_eventNumber != m_oo.second) 
     {

@@ -19,7 +19,7 @@ namespace HLeptonsCPRW {
   int npafin, int iflin1, int iflin2, int iflout1, int iflout2, int iflout3, 
   double x1, double x2, double *pjet1, double *pjet2, double *pjet3, double *phiggs);
   std::pair<double,double> getWeightsDtilde(double ecm, double mH,int npafin, int ifl1in,int ifl2in,int ifl1out, int ifl2out, int ifl3out, double x1, double x2, double* pjet1, double *pjet2, double *pjet3, double *phiggs);
-  std::pair<double,double> getOptObs(double ecm,double mH,double x1,double x2,double pdf1,double pdf2, double* pjet1, double* pjet2, double* phiggs);
+  std::pair<double,double> getOptObs(double ecm,double mH,double x1,double x2,double* pdf1,double* pdf2, double* pjet1, double* pjet2, double* phiggs);
 
 }
 

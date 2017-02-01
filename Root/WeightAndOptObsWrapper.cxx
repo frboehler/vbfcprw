@@ -46,11 +46,11 @@ namespace HLeptonsCPRW {
     return weight;
   }
 
-  std::pair<double,double> getOptObs(double ecm,double mH,double x1,double x2,double pdf1,double pdf2, double *pjet1, double *pjet2, double *phiggs) {
+  std::pair<double,double> getOptObs(double ecm,double mH,double x1,double x2,double *pdf1,double *pdf2, double *pjet1, double *pjet2, double *phiggs) {
     double oo1=-1;
     double oo2=-1;
     int ierr =-1;
-    optobs_(&ecm,&mH,&x1,&x2,&pdf1,&pdf2,pjet1,pjet2,phiggs,&oo1,&oo2,&ierr);
+    optobs_(&ecm,&mH,&x1,&x2,pdf1,pdf2,pjet1,pjet2,phiggs,&oo1,&oo2,&ierr);
     if (ierr != 0)
       std::cout<<"Problem in getOptObs. Check output!"<<std::endl;
     return std::make_pair(oo1,oo2);
