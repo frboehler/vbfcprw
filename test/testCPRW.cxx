@@ -16,6 +16,7 @@ int main(int argc, char* argv[])
   double x2 = 0.3;
   double pdf1[] = {1,1,1,1,1,1,1,1,1,1,1,1,1};  //from -6 to 6: pdfs for 1st and 2nd parton
   double pdf2[] = {1,1,1,1,1,1,1,1,1,1,1,1,1};  //from -6 to 6: pdfs for 1st and 2nd parton
+  double Q = 84000;
   int flavour1In = 1;                           //flavour of incoming/outgoing parton n
   int flavour2In = 1;                           //flavour assignment: t = 6  b = 5 c = 4, s = 3, u = 2, d = 1   
   int flavour1Out = 1;                          //anti-qarks with negative sign
@@ -38,6 +39,7 @@ int main(int argc, char* argv[])
     if (!silent)
       std::cout<<"Using EventStore"<<std::endl;
     ooES.setEventNumber(345152);
+    ooES.initPDFSet("CT10", 0, 91.2);
   }
   
   
@@ -66,15 +68,15 @@ int main(int argc, char* argv[])
       if (!silent)
       {
         std::cout<<"Calling getOptObs(...)! Results are: "<<
-        ooES.getOptObs(0,ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs)
+        ooES.getOptObs(0,ecm, mH ,x1,x2,Q,pjet1,pjet2,phiggs)
         << " , " <<
-        ooES.getOptObs(1,ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs)
+        ooES.getOptObs(1,ecm, mH ,x1,x2,Q,pjet1,pjet2,phiggs)
         <<std::endl;
       }
       else
       {
-        ooES.getOptObs(0,ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
-        ooES.getOptObs(1,ecm, mH ,x1,x2,pdf1,pdf2,pjet1,pjet2,phiggs);
+        ooES.getOptObs(0,ecm, mH ,x1,x2,Q,pjet1,pjet2,phiggs);
+        ooES.getOptObs(1,ecm, mH ,x1,x2,Q,pjet1,pjet2,phiggs);
       }
 
       if (!silent)

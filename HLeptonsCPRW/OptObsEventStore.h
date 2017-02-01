@@ -9,6 +9,8 @@ class OptObsEventStore {
     std::pair<double,int> m_rw = std::make_pair(-1234,-1);
     std::pair< std::pair<double,double> , int > m_wdt = std::make_pair(std::make_pair(-1234,-1234) , -1);
     std::pair< std::pair<double,double> , int > m_oo = std::make_pair(std::make_pair(-1234,-1234) , -1);
+    std::vector<double> getLHAPDF(double Q, double x);
+    bool m_isInitialized = false;
   public:
     OptObsEventStore() {};
     virtual ~OptObsEventStore() {};
@@ -49,12 +51,21 @@ class OptObsEventStore {
       return -1234;
     }
   }
-  double getOptObs(int entry, double ecm,double mH,double x1,double x2,double *pdf1,double *pdf2, double* pjet1, double* pjet2, double* phiggs)
+  double getOptObs(int entry, double ecm,double mH,double x1,double x2,double Q, double* pjet1, double* pjet2, double* phiggs)
   {
+    double a_pdf1[13];
+    double a_pdf2[13];
     if (m_eventNumber != m_oo.second) 
     {
+      std::vector<double> pdf1 = getLHAPDF(Q,x1);
+      std::vector<double> pdf2 = getLHAPDF(Q,x2);
+      for (unsigned int i=0; i<pdf1.size(); ++i)
+      {
+        a_pdf1[i] = pdf1.at(i);
+        a_pdf2[i] = pdf2.at(i);
+      }
       m_oo = std::make_pair(
-                        HLeptonsCPRW::getOptObs( ecm, mH, x1, x2, pdf1, pdf2, pjet1, pjet2, phiggs)
+                        HLeptonsCPRW::getOptObs( ecm, mH, x1, x2, a_pdf1, a_pdf2, pjet1, pjet2, phiggs)
                         ,m_eventNumber);
 
     }
