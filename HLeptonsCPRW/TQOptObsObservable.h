@@ -1,10 +1,13 @@
 //this file looks like plain C, but it's actually -*- c++ -*-
+#include "RootCore/Packages.h"
+#ifdef ROOTCORE_PACKAGE_QFramework
 #ifndef __TQOptObsObservable__
 #define __TQOptObsObservable__
 
+
 #include "TTreeFormula.h"
-#include "QFramework/TQTreeObservable.h"
 #include "HLeptonsCPRW/OptObsEventStore.h"
+#include "QFramework/TQTreeObservable.h"
 
 class TQOptObsObservable : public TQTreeObservable {
 
@@ -32,5 +35,5 @@ public:
 
 
 };
-
+#endif
 #endif

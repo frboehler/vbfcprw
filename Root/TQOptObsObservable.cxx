@@ -1,11 +1,12 @@
 #include "HLeptonsCPRW/TQOptObsObservable.h"
+#ifdef ROOTCORE_PACKAGE_QFramework
+ClassImp(TQOptObsObservable)
 #include "QFramework/TQUtils.h"
 
 //#define _DEBUG_
 #include "QFramework/TQLibrary.h"
 #include "TSystem.h"
 
-ClassImp(TQOptObsObservable)
 
 //______________________________________________________________________________________________
 
@@ -120,3 +121,4 @@ TObjArray* TQOptObsObservable::getBranchNames() const {
   return retval;
 }
 
+#endif

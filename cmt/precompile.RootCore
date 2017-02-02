@@ -40,7 +40,9 @@ PYCLASSES=$DIRECTORY/python/__init__.py
 $ECHO "# this is an automatically generated file" > $PYCLASSES
 cat $DIRECTORY/python/${RCPACKAGENAME}.py >> $PYCLASSES
 for CLASS in $(find $DIRECTORY/${RCPACKAGENAME}/*.h | xargs egrep -h "^[ ]*class[ ]*[A-Za-z0-9]+[ ]*[:{]" | egrep -v "//[ ]*nested" | sed -e 's/.*class[ ]*\([A-Za-z0-9]*\)[ ]*.*/\1/g'); do
-    echo $CLASS"=ROOT."$CLASS >> $PYCLASSES
+    echo "try:" >> $PYCLASSES
+    echo -e '\t'$CLASS"=ROOT."$CLASS >> $PYCLASSES
+    echo "except: pass" >> $PYCLASSES
 done
 for NAMESPACE in $(find $DIRECTORY/${RCPACKAGENAME}/*.h | xargs egrep -h "^[ ]*namespace[ ]*[A-Za-z0-9]+[ ]" | grep -v xAOD | sed -e 's/.*namespace[ ]*\([A-Za-z0-9]*\)[ ]*.*/\1/g'); do
     echo $NAMESPACE"=ROOT."$NAMESPACE >> $PYCLASSES
