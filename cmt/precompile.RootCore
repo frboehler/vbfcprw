@@ -1,4 +1,5 @@
 #!/bin/bash
+# This is blatantly stolen from QFramework
 
 RCPACKAGENAME=HLeptonsCPRW
 ECHO="echo -e"
@@ -24,9 +25,6 @@ if [ ! -f $LINKDEF ]; then
     $ECHO "\n\n#ifdef __CINT__\n\n\n#pragma link off all globals;\n#pragma link off all classes;\n#pragma link off all functions;\n#pragma link C++ nestedclass;\n#pragma link C++ nestedtypedef;\n" >> $LINKDEF
     for CLASS in $(find $DIRECTORY/${RCPACKAGENAME}/*.h | xargs egrep -h "^[ ]*class[ ]*[A-Za-z0-9]+[ ]*[:{]" | egrep -v "//[ ]*nested" | sed -e 's/.*class[ ]*\([A-Za-z0-9]*\)[ ]*.*/\1/g'); do
         $ECHO "#pragma link C++ class $CLASS+;" >> $LINKDEF;
-    done
-    for FILES in $(ls $DIRECTORY/${RCPACKAGENAME}/*.add) ; do
-        cat $FILES | grep -v "//" >>$LINKDEF ;
     done
     for NAMESPACE in $(find $DIRECTORY/${RCPACKAGENAME}/*.h | xargs egrep -h "^[ ]*namespace[ ]*[A-Za-z0-9]+[ ]" | grep -v "EXCLUDE" | sed -e 's/.*namespace[ ]*\([A-Za-z0-9]*\)[ ]*.*/\1/g'); do
         $ECHO "#pragma link C++ namespace $NAMESPACE;" >> $LINKDEF;
