@@ -38,3 +38,54 @@ std::vector<double> OptObsEventStore::getLHAPDF(double Q, double x){
   return val;
 
 }
+
+
+double OptObsEventStore::getOptObs(int entry, int EventNumber, double ecm,double mH,double x1,double x2,double Q, double* pjet1, double* pjet2, double* phiggs)
+{
+  double a_pdf1[13];
+  double a_pdf2[13];
+  if (EventNumber != m_oo.second) 
+  {
+    std::vector<double> pdf1 = getLHAPDF(Q,x1);
+    std::vector<double> pdf2 = getLHAPDF(Q,x2);
+    for (unsigned int i=0; i<pdf1.size(); ++i)
+    {
+      a_pdf1[i] = pdf1.at(i);
+      a_pdf2[i] = pdf2.at(i);
+    }
+    m_oo = std::make_pair(
+                      HLeptonsCPRW::getOptObs( ecm, mH, x1, x2, a_pdf1, a_pdf2, pjet1, pjet2, phiggs)
+                      ,EventNumber);
+
+  }
+  if (entry == 0)
+    return m_oo.first.first;
+  else if (entry == 1)
+    return m_oo.first.second;
+  else
+  {
+    std::cout << "Error, entry must be 0/1. Returning -1234! ";
+    return -1234;
+  }
+}
+
+
+double OptObsEventStore::getWeightsDtilde(int entry, int EventNumber, double ecm, double mH,int npafin, int ifl1in,int ifl2in,int ifl1out, int ifl2out, int ifl3out, double x1, double x2, double* pjet1, double *pjet2, double *pjet3, double *phiggs)
+{
+  if (EventNumber != m_wdt.second) 
+  {
+    m_wdt = std::make_pair(
+                      HLeptonsCPRW::getWeightsDtilde( ecm,  mH, npafin,  ifl1in, ifl2in, ifl1out,  ifl2out,  ifl3out,  x1,  x2, pjet1,  pjet2,  pjet3,  phiggs)
+                      ,EventNumber);
+
+  }
+  if (entry == 0)
+    return m_wdt.first.first;
+  else if (entry == 1)
+    return m_wdt.first.second;
+  else
+  {
+    std::cout << "Error, entry must be 0/1. Returning -1234! ";
+    return -1234;
+  }
+}

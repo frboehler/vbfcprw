@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
         std::cout<<"Calling getOptObs(...)! Results are: "<< oo1 << " , "<< oo2<<std::endl;
 
       oo1 = 
-        ooES.getReweight(eventNumber, ecm, mH, 1 , 
+        ooES.getReweight(ecm, mH, 1 , 
         0.5, 0.5, 0.5, 0.5, 0.5, //rsmin,din,dbin,dtin,dtbin
         0.5, 0.5, 0.5,           //a1hwwin,a2hwwin,a3hwwin
         0.5, 0.5, 0.5,           //a1haain,a2haain,a3haain

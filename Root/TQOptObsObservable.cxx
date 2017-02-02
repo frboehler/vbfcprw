@@ -92,7 +92,7 @@ double TQOptObsObservable::getValue() const {
   else if (m_var.Contains("WeightDTilde"))
     retval = m_ooE->getWeightsDtilde(entry, eventNumber, ecm, mH , npafin,flavour1In,flavour2In,flavour1Out,flavour2Out,flavour3Out,x1,x2,pjet1,pjet2,pjet3,phiggs);
   else if (m_var.Contains("Reweight"))
-    retval = m_ooE->getReweight(eventNumber, ecm, mH, 1 , 
+    retval = m_ooE->getReweight(ecm, mH, 1 , 
         0.5, 0.5, 0.5, 0.5, 0.5, //rsmin,din,dbin,dtin,dtbin
         0.5, 0.5, 0.5,           //a1hwwin,a2hwwin,a3hwwin
         0.5, 0.5, 0.5,           //a1haain,a2haain,a3haain
