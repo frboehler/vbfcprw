@@ -5,9 +5,13 @@ CXXFLAGS =  $(ROOTCFLAGS) -Wall -O0 -fPIC -std=c++0x -g
 BOOST=-L$(ALRB_BOOST_ROOT)/lib/-lboost_filesystem
 
 
-all: bin/testCPRW
+all: bin/testCPRW bin/testTQCPRW
 
 bin/testCPRW: testCPRW.cxx
+	mkdir -p bin
+	$(LD) $(CXXFLAGS) $(shell rc get_cxxflags) $^ $(shell rc get_all_ldflags) -lweightandoptobs -lgfortran -o $@ 
+
+bin/testTQCPRW: testTQCPRW.cxx
 	mkdir -p bin
 	$(LD) $(CXXFLAGS) $(shell rc get_cxxflags) $^ $(shell rc get_all_ldflags) -lweightandoptobs -lgfortran -o $@ 
 

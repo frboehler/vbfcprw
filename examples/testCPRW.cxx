@@ -14,8 +14,8 @@ int main(int argc, char* argv[])
   int npafin = 2;                               //number of partons in final state  either  2 or 3
   double x1 = 0.2;                              //Bjorken x of incoming partons, 1 in + z , 2 in -z direction
   double x2 = 0.3;
-  double pdf1[] = {0.,0.00449174,0.00675285,0.0107517,0.0170986,0.0201949,0.119612,0.149197,0.341326,0.0107517,0.00675285,0.00449174,0.};  //from -6 to 6: pdfs for 1st and 2nd parton
-  double pdf2[] = {0.,0.00121078,0.00196846,0.00293361,0.00537899,0.00426094,0.0356196,0.0720556,0.201835,0.00293361,0.00196846,0.00121078,0.};  //from -6 to 6: pdfs for 1st and 2nd parton
+  double pdf1[] = {0.,0.00449174,0.00675285,0.0107517,0.0170986,0.0201949,0.119612,0.149197,0.341326,0.0107517,0.00675285,0.00449174,0.};  //from -6 to 6: pdfs for 1st parton
+  double pdf2[] = {0.,0.00121078,0.00196846,0.00293361,0.00537899,0.00426094,0.0356196,0.0720556,0.201835,0.00293361,0.00196846,0.00121078,0.};  //from -6 to 6: pdfs for 2nd parton
   double Q = 84000;
   int flavour1In = 1;                           //flavour of incoming/outgoing parton n
   int flavour2In = 1;                           //flavour assignment: t = 6  b = 5 c = 4, s = 3, u = 2, d = 1   

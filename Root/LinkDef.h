@@ -2,6 +2,7 @@
 #define __HLEPTONSCPRWDICT__
 
 #include "HLeptonsCPRW/OptObsEventStore.h"
+#include "HLeptonsCPRW/TQOptObsObservable.h"
 
 #ifdef __CINT__
 
@@ -14,6 +15,7 @@
 
 #pragma link C++ namespace HLeptonsCPRW;
 #pragma link C++ class OptObsEventStore;
+#pragma link C++ class TQOptObsObservable;
 
 #endif
 
