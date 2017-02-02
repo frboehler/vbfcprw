@@ -30,41 +30,11 @@ std::vector<double> OptObsEventStore::getLHAPDF(double Q, double x){
     return val;
   }
 
-  //LHAPDF::initPDF(0);
   for (int f = -6; f <= 6; ++f) {
-    if(f==0){
-      double v = LHAPDF::xfx(x, Q, 0);
-      //double v2 = LHAPDF::xfx(x, Q, 21);
-      //      cout << "x=" << x << ", Q=" << Q << ", f=" <<f<<":"<< v << " " << v2 <<endl;
-      val.push_back(v);
-    }
-    else{
-      double v = LHAPDF::xfx(x, Q, f);
-      //      cout << "x=" << x << ", Q=" << Q << ", f=" <<f<<":"<< v << endl;
-      val.push_back(v);
-    }
+    double v;
+    v = LHAPDF::xfx(x, Q, f);
+    val.push_back(v);
   }
-  //  cout << endl;
-  /* for (int n = 0; n < NUMBER + 1; ++n) { */
-  /*   cout << "Set number: " << n << endl; */
-  /*   LHAPDF::initPDF(n); */
-  /*   for (int ix = 1; ix < 11; ++ix) { */
-  /*     const double x = (ix - 0.5) / 10.0; */
-  /*     cout << "x=" << x << ", Q=" << Q << ": "; */
-  /*     vector<double> result = LHAPDF::xfx(x, Q); */
-  /*     std::copy(result.begin(), result.end(), ostream_iterator<double>(cout,"\t")); */
-  /*     cout << endl; */
-  /*   } */
-  /*   cout << endl; */
-  /* } */
-
-
-  /* cout << string().insert(0, 40, '-') << endl << endl; */
-  /* cout << "Checking LHAPDF with package " << endl; */
-  /* cout << NAME << " set number " << SUBSET << "/" << LHAPDF::numberPDF() << endl << endl; */
-  /* cout << "LHAPDF::getDescription() gives:" << endl; */
-  /* LHAPDF::getDescription(); */
-
   return val;
 
 }
