@@ -140,29 +140,6 @@ double TQOptObsObservable::getValue() const {
   // retrieve the value of this tree observable
   // return NaN in case of failure
 
-  //************
-  // This needs to be filled with proper branches from ntuples
-  //
-  //m_EventNumber->GetNdata();
-  //m_jet_0_pt->GetNdata();
-  //m_jet_0_eta->GetNdata();
-  //m_jet_0_phi->GetNdata();
-  //m_jet_0_m->GetNdata();
-  //
-  //m_jet_1_pt->GetNdata();
-  //m_jet_1_eta->GetNdata();
-  //m_jet_1_phi->GetNdata();
-  //m_jet_1_m->GetNdata();
-  //
-  //m_jet_2_pt->GetNdata();
-  //m_jet_2_eta->GetNdata();
-  //m_jet_2_phi->GetNdata();
-  //m_jet_2_m->GetNdata();
-  //
-  //m_h_pt->GetNdata();
-  //m_h_eta->GetNdata();
-  //m_h_phi->GetNdata();
-  //m_h_m->GetNdata();
   //
   double ecm = m_tags->getTagDoubleDefault("ecm",13000);                           //proton-proton center-of mass energy in GeV
   double Q =  m_tags->getTagDoubleDefault("scale_Q",125); // scale used for lhapdf
@@ -239,7 +216,7 @@ double TQOptObsObservable::getValue() const {
 
 
   v.SetPtEtaPhiM(m_h_pt->EvalInstance(),m_h_eta->EvalInstance(),m_h_phi->EvalInstance(),m_h_m->EvalInstance());
-  double phiggs[] = {v.E(),v.Px(),v.Py(),v.Pz()};            //E,px,py,pz of Higgs boson make sure that four-momentum conservation holds 
+  double phiggs[] = {v.E(),v.Px(),v.Py(),v.Pz()};     
  
 
 
@@ -250,11 +227,11 @@ double TQOptObsObservable::getValue() const {
   double retval = -999;
   //m_jet_pt->GetNdata();
   int entry = -1;
-  if (m_var.Contains("1") || m_var.Contains("_lin"))
-    entry = 1;
-  else if (m_var.Contains("0"))
+  if (m_var.Contains("0") || m_var.Contains("_lin"))
     entry = 0;
-  if (m_var.Contains("OptimalObservable") || m_var.Contains("_quad"))
+  else if (m_var.Contains("1") || m_var.Contains("_quad"))
+    entry = 1;
+  if (m_var.Contains("OptimalObservable"))
     retval = m_ooE->getOptObs(entry, eventNumber, ecm, mH ,x1,x2,Q,pjets[0],pjets[1],phiggs);
   else if (m_var.Contains("WeightDTilde"))
     retval = m_ooE->getWeightsDtilde(entry, eventNumber, ecm, mH , npafin,flavourIn[0],flavourIn[1],flavourOut[0],flavourOut[1],flavourOut[3],x1,x2,pjets[0],pjets[1],pjets[2],phiggs);
