@@ -6,15 +6,17 @@ ClassImp(TQOptObsObservable)
 //#define _DEBUG_
 #include "QFramework/TQLibrary.h"
 #include "TSystem.h"
+#include "TLorentzVector.h"
 
 
 //______________________________________________________________________________________________
 
-TQOptObsObservable::TQOptObsObservable(TString variable, double dtilde) :
+TQOptObsObservable::TQOptObsObservable(TString variable, TQTaggable *tags, double dtilde) :
 TQTreeObservable()
 {
   // default constructor
   m_ooE = new OptObsEventStore();
+  m_tags = tags;
   m_var = variable;
 }
 
@@ -25,8 +27,63 @@ bool TQOptObsObservable::initializeSelf(){
   // initialize the formula of this observable
   DEBUGclass("initializing ...");
 
-  m_EventNumber = new TTreeFormula("EventNumber","EventNumber",fTree);
-  //m_jet_eta = new TTreeFormula("jet_eta",TString::Format("jet_eta[%i]",m_jetN),fTree);
+  m_EventNumber = new TTreeFormula("event_number","event_number",fTree);
+
+  if (m_tags->getTagBoolDefault("isTruth",false))
+  {
+    m_jet_0_pt =    new TTreeFormula("truth_opt_obs_parton_0_pt",    "truth_opt_obs_parton_0_pt", fTree);
+    m_jet_0_eta =   new TTreeFormula("truth_opt_obs_parton_0_eta",   "truth_opt_obs_parton_0_eta",fTree);
+    m_jet_0_phi =   new TTreeFormula("truth_opt_obs_parton_0_phi",   "truth_opt_obs_parton_0_phi",fTree);
+    m_jet_0_m =     new TTreeFormula("truth_opt_obs_parton_0_m",     "truth_opt_obs_parton_0_m",  fTree);
+    m_jet_0_pdgId = new TTreeFormula("truth_opt_obs_parton_0_pdgId", "truth_opt_obs_parton_0_pdgId",  fTree);
+
+    m_jet_1_pt =    new TTreeFormula("truth_opt_obs_parton_1_pt",    "truth_opt_obs_parton_1_pt", fTree);
+    m_jet_1_eta =   new TTreeFormula("truth_opt_obs_parton_1_eta",   "truth_opt_obs_parton_1_eta",fTree);
+    m_jet_1_phi =   new TTreeFormula("truth_opt_obs_parton_1_phi",   "truth_opt_obs_parton_1_phi",fTree);
+    m_jet_1_m =     new TTreeFormula("truth_opt_obs_parton_1_m",     "truth_opt_obs_parton_1_m",  fTree);
+    m_jet_1_pdgId = new TTreeFormula("truth_opt_obs_parton_1_pdgId", "truth_opt_obs_parton_1_pdgId",  fTree);
+
+    m_jet_2_pt =    new TTreeFormula("truth_opt_obs_parton_2_pt",    "truth_opt_obs_parton_2_pt", fTree);
+    m_jet_2_eta =   new TTreeFormula("truth_opt_obs_parton_2_eta",   "truth_opt_obs_parton_2_eta",fTree);
+    m_jet_2_phi =   new TTreeFormula("truth_opt_obs_parton_2_phi",   "truth_opt_obs_parton_2_phi",fTree);
+    m_jet_2_m =     new TTreeFormula("truth_opt_obs_parton_2_m",     "truth_opt_obs_parton_2_m",  fTree);
+    m_jet_2_pdgId = new TTreeFormula("truth_opt_obs_parton_2_pdgId", "truth_opt_obs_parton_2_pdgId",  fTree);
+
+    m_h_pt =    new TTreeFormula("truth_opt_obs_higgs_pt",    "truth_opt_obs_higgs_pt", fTree);
+    m_h_eta =   new TTreeFormula("truth_opt_obs_higgs_eta",   "truth_opt_obs_higgs_eta",fTree);
+    m_h_phi =   new TTreeFormula("truth_opt_obs_higgs_phi",   "truth_opt_obs_higgs_phi",fTree);
+    m_h_m =     new TTreeFormula("truth_opt_obs_higgs_m",     "truth_opt_obs_higgs_m",  fTree);
+
+    m_x1 = new TTreeFormula("truth_event_info_x1","truth_event_info_x1",fTree);
+    m_x2 = new TTreeFormula("truth_event_info_x2","truth_event_info_x2",fTree);
+
+    m_pdgIn1 = new TTreeFormula("truth_event_info_parton_0_pdgId","truth_event_info_parton_0_pdgId", fTree);
+    m_pdgIn2 = new TTreeFormula("truth_event_info_parton_0_pdgId","truth_event_info_parton_0_pdgId", fTree);
+
+  }
+
+  else
+  {
+    m_jet_0_pt =  new TTreeFormula("jet_0_pt", "jet_0_pt", fTree);
+    m_jet_0_eta = new TTreeFormula("jet_0_eta","jet_0_eta",fTree);
+    m_jet_0_phi = new TTreeFormula("jet_0_phi","jet_0_phi",fTree);
+    m_jet_0_m =   new TTreeFormula("jet_0_m",  "jet_0_m",  fTree);
+
+    m_jet_1_pt =  new TTreeFormula("jet_1_pt", "jet_1_pt", fTree);
+    m_jet_1_eta = new TTreeFormula("jet_1_eta","jet_1_eta",fTree);
+    m_jet_1_phi = new TTreeFormula("jet_1_phi","jet_1_phi",fTree);
+    m_jet_1_m =   new TTreeFormula("jet_1_m",  "jet_1_m",  fTree);
+
+    m_jet_2_pt =  new TTreeFormula("jet_2_pt", "jet_2_pt", fTree);
+    m_jet_2_eta = new TTreeFormula("jet_2_eta","jet_2_eta",fTree);
+    m_jet_2_phi = new TTreeFormula("jet_2_phi","jet_2_phi",fTree);
+    m_jet_2_m =   new TTreeFormula("jet_2_m",  "jet_2_m",  fTree);
+
+    m_h_pt = new TTreeFormula("lephad_mmc_maxw_pt","lephad_mmc_maxw_pt",fTree);
+    m_h_eta = new TTreeFormula("lephad_mmc_maxw_eta","lephad_mmc_maxw_eta",fTree);
+    m_h_phi = new TTreeFormula("lephad_mmc_maxw_phi","lephad_mmc_maxw_phi",fTree);
+    m_h_m = new TTreeFormula("lephad_mmc_maxw_m","lephad_mmc_maxw_m",fTree);
+  }
 
   DEBUGclass("initialized!");
   
@@ -38,6 +95,33 @@ bool TQOptObsObservable::initializeSelf(){
 bool TQOptObsObservable::finalizeSelf(){
   delete m_ooE;
   delete m_EventNumber;
+  delete m_jet_0_pt;
+  delete m_jet_0_eta;
+  delete m_jet_0_phi;
+  delete m_jet_0_m;
+  delete m_jet_0_pdgId;
+
+  delete m_jet_1_pt;
+  delete m_jet_1_eta;
+  delete m_jet_1_phi;
+  delete m_jet_1_m;
+  delete m_jet_1_pdgId;
+
+  delete m_jet_2_pt;
+  delete m_jet_2_eta;
+  delete m_jet_2_phi;
+  delete m_jet_2_m;
+  delete m_jet_2_pdgId;
+
+  delete m_h_pt;
+  delete m_h_eta;
+  delete m_h_phi;
+  delete m_h_m;
+
+  delete m_x1;
+  delete m_x2;
+  delete m_pdgIn1;
+  delete m_pdgIn2;
   //.
   //.
   //.
@@ -59,24 +143,106 @@ double TQOptObsObservable::getValue() const {
   //************
   // This needs to be filled with proper branches from ntuples
   //
-  m_EventNumber->GetNdata();
+  //m_EventNumber->GetNdata();
+  //m_jet_0_pt->GetNdata();
+  //m_jet_0_eta->GetNdata();
+  //m_jet_0_phi->GetNdata();
+  //m_jet_0_m->GetNdata();
+  //
+  //m_jet_1_pt->GetNdata();
+  //m_jet_1_eta->GetNdata();
+  //m_jet_1_phi->GetNdata();
+  //m_jet_1_m->GetNdata();
+  //
+  //m_jet_2_pt->GetNdata();
+  //m_jet_2_eta->GetNdata();
+  //m_jet_2_phi->GetNdata();
+  //m_jet_2_m->GetNdata();
+  //
+  //m_h_pt->GetNdata();
+  //m_h_eta->GetNdata();
+  //m_h_phi->GetNdata();
+  //m_h_m->GetNdata();
+  //
+  double ecm = m_tags->getTagDoubleDefault("ecm",13000);                           //proton-proton center-of mass energy in GeV
+  double Q =  m_tags->getTagDoubleDefault("scale_Q",125); // scale used for lhapdf
+  double mH = m_h_m->EvalInstance();
+
+
   int eventNumber = m_EventNumber->EvalInstance();
-  double pjet1[] = {60,25,25,25};               //E,px,py,pz of nth final state parton
-  double pjet2[] = {76,44,12,24};
-  double pjet3[] = {23,70,11,111};
-  double phiggs[] = {123,12,44,123};            //E,px,py,pz of Higgs boson make sure that four-momentum conservation holds 
+
+  double x1,x2;
+
+  int npafin = 2;
+
+
+  // find the two non-gluon final state partons
+  std::vector<double*> pjets;
+  TLorentzVector v;
+  std::vector<int> flavourIn, flavourOut;
+  if (m_tags->getTagBoolDefault("isTruth",false))
+  {
+    x1 = m_x1->EvalInstance();           
+    x2 = m_x2->EvalInstance();
+    flavourIn.push_back(m_pdgIn1->EvalInstance());
+    flavourIn.push_back(m_pdgIn2->EvalInstance());
+    if (m_jet_0_pdgId->EvalInstance() != 21)
+    {
+      v.SetPtEtaPhiM(m_jet_0_pt->EvalInstance(),m_jet_0_eta->EvalInstance(),m_jet_0_phi->EvalInstance(),m_jet_0_m->EvalInstance());
+      double p[] = {v.E(),v.Px(),v.Py(),v.Pz()};
+      pjets.push_back(p);
+      flavourOut.push_back(m_jet_0_pdgId->EvalInstance());
+    }
+    if (m_jet_1_pdgId->EvalInstance() != 21)
+    {
+      v.SetPtEtaPhiM(m_jet_1_pt->EvalInstance(),m_jet_1_eta->EvalInstance(),m_jet_1_phi->EvalInstance(),m_jet_1_m->EvalInstance());
+      double p[] = {v.E(),v.Px(),v.Py(),v.Pz()};
+      pjets.push_back(p);
+      flavourOut.push_back(m_jet_1_pdgId->EvalInstance());
+    }
+    v.SetPtEtaPhiM(m_jet_2_pt->EvalInstance(),m_jet_2_eta->EvalInstance(),m_jet_2_phi->EvalInstance(),m_jet_2_m->EvalInstance());
+    double p[] = {v.E(),v.Px(),v.Py(),v.Pz()};
+    pjets.push_back(p);
+    flavourOut.push_back(m_jet_0_pdgId->EvalInstance());
+    if (v.Pt() > 0)
+      npafin = 3;
+    if (m_jet_0_pdgId->EvalInstance() != 21 && pjets.size() < 3)
+    {
+      v.SetPtEtaPhiM(m_jet_0_pt->EvalInstance(),m_jet_0_eta->EvalInstance(),m_jet_0_phi->EvalInstance(),m_jet_0_m->EvalInstance());
+      double p[] = {v.E(),v.Px(),v.Py(),v.Pz()};
+      pjets.push_back(p);
+      flavourOut.push_back(m_jet_0_pdgId->EvalInstance());
+    }
+    if (m_jet_1_pdgId->EvalInstance() != 21 && pjets.size() < 3)
+    {
+      v.SetPtEtaPhiM(m_jet_1_pt->EvalInstance(),m_jet_1_eta->EvalInstance(),m_jet_1_phi->EvalInstance(),m_jet_1_m->EvalInstance());
+      double p[] = {v.E(),v.Px(),v.Py(),v.Pz()};
+      pjets.push_back(p);
+      flavourOut.push_back(m_jet_1_pdgId->EvalInstance());
+    }
+  }
+
+  else
+  {
+    
+    v.SetPtEtaPhiM(m_jet_0_pt->EvalInstance(),m_jet_0_eta->EvalInstance(),m_jet_0_phi->EvalInstance(),m_jet_0_m->EvalInstance());
+    double p[] = {v.E(),v.Px(),v.Py(),v.Pz()};
+    pjets.push_back(p);
+    TLorentzVector fO = (TLorentzVector(m_h_pt->EvalInstance(),m_h_eta->EvalInstance(),m_h_phi->EvalInstance(),m_h_m->EvalInstance()) + v + TLorentzVector(m_jet_1_pt->EvalInstance(),m_jet_1_eta->EvalInstance(),m_jet_1_phi->EvalInstance(),m_jet_1_m->EvalInstance()));
+    x1 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity());
+    x2 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity()*-1);
+
+    v.SetPtEtaPhiM(m_jet_1_pt->EvalInstance(),m_jet_1_eta->EvalInstance(),m_jet_1_phi->EvalInstance(),m_jet_1_m->EvalInstance());
+    double p2[] = {v.E(),v.Px(),v.Py(),v.Pz()};
+    pjets.push_back(p2);
+  }
+
+
+  v.SetPtEtaPhiM(m_h_pt->EvalInstance(),m_h_eta->EvalInstance(),m_h_phi->EvalInstance(),m_h_m->EvalInstance());
+  double phiggs[] = {v.E(),v.Px(),v.Py(),v.Pz()};            //E,px,py,pz of Higgs boson make sure that four-momentum conservation holds 
  
-  double ecm = 13000;                           //proton-proton center-of mass energy in GeV
-  double mH = 125;                              //mass of Higgs boson in Gev
-  int npafin = 2;                               //number of partons in final state  either  2 or 3
-  double x1 = 0.2;                              //Bjorken x of incoming partons, 1 in + z , 2 in -z direction
-  double x2 = 0.3;
-  double Q = 84000;
-  int flavour1In = 1;                           //flavour of incoming/outgoing parton n
-  int flavour2In = 1;                           //flavour assignment: t = 6  b = 5 c = 4, s = 3, u = 2, d = 1   
-  int flavour1Out = 1;                          //anti-qarks with negative sign
-  int flavour2Out = 1;                          //gluon = 0 
-  int flavour3Out = 1;
+
+
   //
   //***************
 
@@ -89,9 +255,9 @@ double TQOptObsObservable::getValue() const {
   else if (m_var.Contains("0"))
     entry = 0;
   if (m_var.Contains("OptimalObservable") || m_var.Contains("_quad"))
-    retval = m_ooE->getOptObs(entry, eventNumber, ecm, mH ,x1,x2,Q,pjet1,pjet2,phiggs);
+    retval = m_ooE->getOptObs(entry, eventNumber, ecm, mH ,x1,x2,Q,pjets[0],pjets[1],phiggs);
   else if (m_var.Contains("WeightDTilde"))
-    retval = m_ooE->getWeightsDtilde(entry, eventNumber, ecm, mH , npafin,flavour1In,flavour2In,flavour1Out,flavour2Out,flavour3Out,x1,x2,pjet1,pjet2,pjet3,phiggs);
+    retval = m_ooE->getWeightsDtilde(entry, eventNumber, ecm, mH , npafin,flavourIn[0],flavourIn[1],flavourOut[0],flavourOut[1],flavourOut[3],x1,x2,pjets[0],pjets[1],pjets[2],phiggs);
   else if (m_var.Contains("Reweight"))
     retval = m_ooE->getReweight(ecm, mH, 1 , 
         0.5, 0.5, 0.5, 0.5, 0.5, //rsmin,din,dbin,dtin,dtbin
@@ -100,8 +266,8 @@ double TQOptObsObservable::getValue() const {
         0.5, 0.5, 0.5,           //a1hazin,a2hazin,a3hazin
         0.5, 0.5, 0.5,           //a1hzzin,a2hzzin,a3hzzin
         0.5,                     //lambdahvvin for formfactor if set to positive value
-        npafin,flavour1In,flavour2In,flavour1Out,flavour2Out,flavour3Out,
-        x1,x2,pjet1,pjet2,pjet3,phiggs);
+        npafin,flavourIn[0],flavourIn[1],flavourOut[0],flavourOut[1],flavourOut[2],
+        x1,x2,pjets[0],pjets[1],pjets[2],phiggs);
   DEBUGclass("Returning %f for variable %s",retval,m_var.Data());
   return retval;
 }
