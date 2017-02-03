@@ -10,11 +10,11 @@ ClassImp(TQOptObsObservable)
 
 //______________________________________________________________________________________________
 
-TQOptObsObservable::TQOptObsObservable(OptObsEventStore *ooe,TString variable, double dtilde) :
+TQOptObsObservable::TQOptObsObservable(TString variable, double dtilde) :
 TQTreeObservable()
 {
   // default constructor
-  m_ooE = ooe;
+  m_ooE = new OptObsEventStore();
   m_var = variable;
 }
 
@@ -36,6 +36,7 @@ bool TQOptObsObservable::initializeSelf(){
 //______________________________________________________________________________________________
 
 bool TQOptObsObservable::finalizeSelf(){
+  delete m_ooE;
   delete m_EventNumber;
   //.
   //.

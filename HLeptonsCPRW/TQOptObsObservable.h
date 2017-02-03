@@ -23,7 +23,7 @@ public:
 
   bool isInitialized;
 
-  TQOptObsObservable(OptObsEventStore *ooe, TString variable, double dtilde = 0);
+  TQOptObsObservable(TString variable, double dtilde = 0);
 
   virtual double getValue() const override;
 
