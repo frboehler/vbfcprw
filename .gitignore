@@ -3,3 +3,4 @@ bin
 *.pyc
 __init__.py
 LinkDef.h
+examples/output.root

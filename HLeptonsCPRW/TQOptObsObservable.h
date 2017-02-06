@@ -48,7 +48,9 @@ public:
 
   bool isInitialized;
 
+  TQOptObsObservable(TString variable, double dtilde = 0);
   TQOptObsObservable(TString variable, TQTaggable *tags, double dtilde = 0);
+  TQOptObsObservable(TString variable, TString tags, double dtilde = 0);
 
   virtual double getValue() const override;
 
