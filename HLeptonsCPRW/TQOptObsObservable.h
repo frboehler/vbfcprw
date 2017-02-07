@@ -14,8 +14,10 @@ class TQOptObsObservable : public TQTreeObservable {
 
 protected:
 
+  bool init(TString var, double dt);
   virtual bool initializeSelf() override;
   virtual bool finalizeSelf() override;
+  double m_dtilde;
   TString m_var;
   TQTaggable *m_tags;
   TTreeFormula *m_EventNumber;
@@ -43,6 +45,11 @@ protected:
   TTreeFormula *m_pdgIn1;
   TTreeFormula *m_pdgIn2;
   OptObsEventStore *m_ooE = 0;
+
+struct sortClass {
+  bool operator() (std::pair<int,float> a, std::pair<int,float> b){
+    return a.second > b.second; }
+} sortObj;
 
 public:
 

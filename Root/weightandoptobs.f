@@ -342,6 +342,7 @@ C     get pure CP-odd matrix elements
                m2cpo = m2if_gluon(iflin1,iflin2,iflout2,iflout3)
             else
                write(*,*)" non valid flavour combination!"
+               return
             endif
          endif
 C     gluon in intial state 
@@ -983,6 +984,7 @@ C     anomalous coupling matrix elements
                m2full = m2if_gluon(iflin1,iflin2,iflout2,iflout3)
             else
                write(*,*)" non valid flavour combination!"
+               return
             endif
          endif
 C     gluon in intial state 

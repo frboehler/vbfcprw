@@ -5,23 +5,23 @@
 int main(int argc, char* argv[])
 {
 
-  double pjet1[] = {60,25,25,25};               //E,px,py,pz of nth final state parton
-  double pjet2[] = {76,44,12,24};
-  double pjet3[] = {23,70,11,111};
-  double phiggs[] = {123,12,44,123};            //E,px,py,pz of Higgs boson make sure that four-momentum conservation holds 
+  double pjet1[] = {438.019730, -24.873165, -94.306022, 427.023386};               //E,px,py,pz of nth final state parton
+  double pjet2[] = {656.475632, -55.150478, 66.466227, -650.769506};
+  double pjet3[] = {51.082110, 25.871174, 3.770224, 43.884504};
+  double phiggs[] = {177.080599, 54.152473, 24.069573, -110.547404};            //E,px,py,pz of Higgs boson make sure that four-momentum conservation holds 
   double ecm = 13000;                           //proton-proton center-of mass energy in GeV
-  double mH = 125;                              //mass of Higgs boson in Gev
-  int npafin = 2;                               //number of partons in final state  either  2 or 3
-  double x1 = 0.2;                              //Bjorken x of incoming partons, 1 in + z , 2 in -z direction
-  double x2 = 0.3;
+  double mH = 124.999901;                              //mass of Higgs boson in Gev
+  int npafin = 3;                               //number of partons in final state  either  2 or 3
+  double x1 = 0.072082;                              //Bjorken x of incoming partons, 1 in + z , 2 in -z direction
+  double x2 = 0.123500;
   double pdf1[] = {0.,0.00449174,0.00675285,0.0107517,0.0170986,0.0201949,0.119612,0.149197,0.341326,0.0107517,0.00675285,0.00449174,0.};  //from -6 to 6: pdfs for 1st parton
   double pdf2[] = {0.,0.00121078,0.00196846,0.00293361,0.00537899,0.00426094,0.0356196,0.0720556,0.201835,0.00293361,0.00196846,0.00121078,0.};  //from -6 to 6: pdfs for 2nd parton
   double Q = 84000;
-  int flavour1In = 1;                           //flavour of incoming/outgoing parton n
-  int flavour2In = 1;                           //flavour assignment: t = 6  b = 5 c = 4, s = 3, u = 2, d = 1   
-  int flavour1Out = 1;                          //anti-qarks with negative sign
-  int flavour2Out = 1;                          //gluon = 0 
-  int flavour3Out = 1;
+  int flavour1In = -2;                           //flavour of incoming/outgoing parton n
+  int flavour2In = 2;                           //flavour assignment: t = 6  b = 5 c = 4, s = 3, u = 2, d = 1   
+  int flavour1Out = -2;                          //anti-qarks with negative sign
+  int flavour2Out = 2;                          //gluon = 0 
+  int flavour3Out = 0;
   bool useEventStore = false;
   bool silent = false;
   bool useNewEvent = false;
@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
       if (!silent)
         std::cout<<"Calling getOptObs(...)! Results are: "<< oo1 << " , "<< oo2<<std::endl;
 
-      oo1 = 
+      double rw = 
         ooES.getReweight(ecm, mH, 1 , 
         0.5, 0.5, 0.5, 0.5, 0.5, //rsmin,din,dbin,dtin,dtbin
         0.5, 0.5, 0.5,           //a1hwwin,a2hwwin,a3hwwin
@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
         x1,x2,pjet1,pjet2,pjet3,phiggs);
       if (!silent)
       {
-        std::cout<<"Calling getReweight(...)! Result is: "<< oo1 <<std::endl;
+        std::cout<<"Calling getReweight(...)! Result is: "<< rw <<std::endl;
         std::cout<<std::endl;
       }
     }
