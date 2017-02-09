@@ -182,9 +182,11 @@ double TQOptObsObservable::getValue() const {
   std::vector<double*> pjets;
   std::vector< std::pair<int,float> > jetList;
   double p0[4],p1[4],p2[4];
-  TLorentzVector v0,v1,v2;
+  TLorentzVector v0,v1,v2,h;
   std::vector<int> flavourIn, flavourOut;
   std::vector< std::pair<TLorentzVector,int> >jets;
+
+  h.SetPtEtaPhiM(m_h_pt->EvalInstance(),m_h_eta->EvalInstance(),m_h_phi->EvalInstance(),m_h_m->EvalInstance());
 
   v0.SetPtEtaPhiM(m_jet_0_pt->EvalInstance(),m_jet_0_eta->EvalInstance(),m_jet_0_phi->EvalInstance(),m_jet_0_m->EvalInstance());
   jetList.push_back(std::make_pair(0,v0.Eta()));
@@ -214,6 +216,12 @@ double TQOptObsObservable::getValue() const {
       jets.push_back(std::make_pair(v2, (m_jet_2_pdgId->EvalInstance() == 21) ? 0 : m_jet_2_pdgId->EvalInstance()));
     }
 
+    if (m_tags->getTagBoolDefault("isDebugRun",false))
+    {
+      INFOclass("Pt of the hpp-system: %f",(h+v0+v1).Pt());
+      INFOclass("Pt of the hppp-system: %f",(h+v0+v1+v2).Pt());
+    }
+
 
     for (unsigned int i=0;i<jetList.size();++i)
       flavourOut.push_back(jets.at(jetList[i].first).second);
@@ -221,7 +229,7 @@ double TQOptObsObservable::getValue() const {
     std::vector<int>::iterator it = std::find(flavourOut.begin(),flavourOut.end(),0);
     int nG = std::count(flavourOut.begin(),flavourOut.end(),0);
     if (nG > 1)
-      ERRORclass("Fount %i gluons in the final state. check input!",nG);
+      ERRORclass("Found %i gluons in the final state. check input!",nG);
     if (it != flavourOut.end())
     {
       flavourOut.erase(it);
@@ -235,8 +243,6 @@ double TQOptObsObservable::getValue() const {
   else
   {
     DEBUGclass("Running reco observable");
-    TLorentzVector h;
-    h.SetPtEtaPhiM(m_h_pt->EvalInstance(),m_h_eta->EvalInstance(),m_h_phi->EvalInstance(),m_h_m->EvalInstance());
     TLorentzVector fO = (h + v0 + v1);
     x1 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity());
     x2 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity()*-1);
