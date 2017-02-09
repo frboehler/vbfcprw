@@ -52,7 +52,7 @@ bool TQOptObsObservable::initializeSelf(){
 
   m_EventNumber = new TTreeFormula("event_number","event_number",fTree);
 
-  if (m_tags->getTagBoolDefault("isTruth",false))
+  if (m_tags->getTagBoolDefault("isReco",false) == false)
   {
     m_jet_0_pt =    new TTreeFormula("truth_opt_obs_parton_0_pt",    "truth_opt_obs_parton_0_pt", fTree);
     m_jet_0_eta =   new TTreeFormula("truth_opt_obs_parton_0_eta",   "truth_opt_obs_parton_0_eta",fTree);
@@ -138,7 +138,7 @@ bool TQOptObsObservable::finalizeSelf(){
   delete m_h_phi;
   delete m_h_m;
 
-  if (m_tags->getTagBoolDefault("isTruth",false))
+  if (m_tags->getTagBoolDefault("isReco",false) == false)
   {
     delete m_jet_0_pdgId;
     delete m_jet_1_pdgId;
@@ -180,31 +180,76 @@ double TQOptObsObservable::getValue() const {
 
   // find the two non-gluon final state partons
   std::vector<double*> pjets;
+  std::vector< std::pair<int,float> > jetList;
   double p0[4],p1[4],p2[4];
   TLorentzVector v0,v1,v2;
   std::vector<int> flavourIn, flavourOut;
-  if (m_tags->getTagBoolDefault("isTruth",false))
+  std::vector< std::pair<TLorentzVector,int> >jets;
+
+  v0.SetPtEtaPhiM(m_jet_0_pt->EvalInstance(),m_jet_0_eta->EvalInstance(),m_jet_0_phi->EvalInstance(),m_jet_0_m->EvalInstance());
+  jetList.push_back(std::make_pair(0,v0.Eta()));
+  
+  v1.SetPtEtaPhiM(m_jet_1_pt->EvalInstance(),m_jet_1_eta->EvalInstance(),m_jet_1_phi->EvalInstance(),m_jet_1_m->EvalInstance());
+  jetList.push_back(std::make_pair(1,v1.Eta()));
+  
+  v2.SetPtEtaPhiM(m_jet_2_pt->EvalInstance(),m_jet_2_eta->EvalInstance(),m_jet_2_phi->EvalInstance(),m_jet_2_m->EvalInstance());
+  if (m_jet_2_pt->EvalInstance() > 0.0)
+  {
+    jetList.push_back(std::make_pair(2,v2.Eta()));
+  }
+  std::sort(jetList.begin(),jetList.end(), sortObj);
+
+  if (m_tags->getTagBoolDefault("isReco",false) == false)
   {
     DEBUGclass("Running truth observable");
     x1 = m_x1->EvalInstance();           
     x2 = m_x2->EvalInstance();
     flavourIn.push_back((m_pdgIn1->EvalInstance() == 21) ? 0 : m_pdgIn1->EvalInstance());
     flavourIn.push_back((m_pdgIn2->EvalInstance() == 21) ? 0 : m_pdgIn2->EvalInstance());
-    std::vector< std::pair<TLorentzVector,int> >jets;
-    std::vector< std::pair<int,float> > jetList;
 
-    v0.SetPtEtaPhiM(m_jet_0_pt->EvalInstance(),m_jet_0_eta->EvalInstance(),m_jet_0_phi->EvalInstance(),m_jet_0_m->EvalInstance());
     jets.push_back(std::make_pair(v0, (m_jet_0_pdgId->EvalInstance() == 21) ? 0 : m_jet_0_pdgId->EvalInstance()));
-    jetList.push_back(std::make_pair(0,v0.Eta()));
-    
-    v1.SetPtEtaPhiM(m_jet_1_pt->EvalInstance(),m_jet_1_eta->EvalInstance(),m_jet_1_phi->EvalInstance(),m_jet_1_m->EvalInstance());
     jets.push_back(std::make_pair(v1, (m_jet_1_pdgId->EvalInstance() == 21) ? 0 : m_jet_1_pdgId->EvalInstance()));
-    jetList.push_back(std::make_pair(1,v1.Eta()));
-    
-    v2.SetPtEtaPhiM(m_jet_2_pt->EvalInstance(),m_jet_2_eta->EvalInstance(),m_jet_2_phi->EvalInstance(),m_jet_2_m->EvalInstance());
-    jets.push_back(std::make_pair(v2, (m_jet_2_pdgId->EvalInstance() == 21) ? 0 : m_jet_2_pdgId->EvalInstance()));
-    jetList.push_back(std::make_pair(2,v2.Eta()));
-    std::sort(jetList.begin(),jetList.end(), sortObj);
+    if (m_jet_2_pt->EvalInstance() > 0.0)
+    {
+      jets.push_back(std::make_pair(v2, (m_jet_2_pdgId->EvalInstance() == 21) ? 0 : m_jet_2_pdgId->EvalInstance()));
+    }
+
+
+    for (unsigned int i=0;i<jetList.size();++i)
+      flavourOut.push_back(jets.at(jetList[i].first).second);
+
+    std::vector<int>::iterator it = std::find(flavourOut.begin(),flavourOut.end(),0);
+    int nG = std::count(flavourOut.begin(),flavourOut.end(),0);
+    if (nG > 1)
+      ERRORclass("Fount %i gluons in the final state. check input!",nG);
+    if (it != flavourOut.end())
+    {
+      flavourOut.erase(it);
+      flavourOut.push_back(0);
+      int index = it-flavourOut.begin();
+      std::pair<int,float> g = jetList.at(index);
+      jetList.erase(jetList.begin()+index);
+      jetList.push_back(g);
+    }
+  }
+  else
+  {
+    DEBUGclass("Running reco observable");
+    TLorentzVector h;
+    h.SetPtEtaPhiM(m_h_pt->EvalInstance(),m_h_eta->EvalInstance(),m_h_phi->EvalInstance(),m_h_m->EvalInstance());
+    TLorentzVector fO = (h + v0 + v1);
+    x1 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity());
+    x2 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity()*-1);
+
+    jets.push_back(std::make_pair(v0, 0));
+    jets.push_back(std::make_pair(v1, 0));
+    if (m_jet_2_pt->EvalInstance() > 0.0)
+    {
+      jets.push_back(std::make_pair(v2, 0));
+    }
+  }
+
+
     p0[0] = jets.at(jetList[0].first).first.E();
     p0[1] = jets.at(jetList[0].first).first.Px();
     p0[2] = jets.at(jetList[0].first).first.Py();
@@ -213,155 +258,32 @@ double TQOptObsObservable::getValue() const {
     p1[1] = jets.at(jetList[1].first).first.Px();
     p1[2] = jets.at(jetList[1].first).first.Py();
     p1[3] = jets.at(jetList[1].first).first.Pz();
-    p2[0] = jets.at(jetList[2].first).first.E();
-    p2[1] = jets.at(jetList[2].first).first.Px();
-    p2[2] = jets.at(jetList[2].first).first.Py();
-    p2[3] = jets.at(jetList[2].first).first.Pz();
     pjets.push_back(p0);
     pjets.push_back(p1);
-    pjets.push_back(p2);
-    for (int i=0;i<3;++i)
-      flavourOut.push_back(jets.at(jetList[i].first).second);
-    /*
-    // i should really make this more clever :(
-    if (m_jet_0_pdgId->EvalInstance() != 21)
+    if (jetList.size() == 3)
     {
-      v.SetPtEtaPhiM(m_jet_0_pt->EvalInstance(),m_jet_0_eta->EvalInstance(),m_jet_0_phi->EvalInstance(),m_jet_0_m->EvalInstance());
-      p1[0] = v.E();
-      p1[1] = v.Px();
-      p1[2] = v.Py();
-      p1[3] = v.Pz();
-      pjets.push_back(p1);
-      flavourOut.push_back(m_jet_0_pdgId->EvalInstance());
-    }
-    if (m_jet_1_pdgId->EvalInstance() != 21)
-    {
-      v.SetPtEtaPhiM(m_jet_1_pt->EvalInstance(),m_jet_1_eta->EvalInstance(),m_jet_1_phi->EvalInstance(),m_jet_1_m->EvalInstance());
-      p2[0] = v.E();
-      p2[1] = v.Px();
-      p2[2] = v.Py();
-      p2[3] = v.Pz();
+      p2[0] = jets.at(jetList[2].first).first.E();
+      p2[1] = jets.at(jetList[2].first).first.Px();
+      p2[2] = jets.at(jetList[2].first).first.Py();
+      p2[3] = jets.at(jetList[2].first).first.Pz();
       pjets.push_back(p2);
-      flavourOut.push_back(m_jet_1_pdgId->EvalInstance());
     }
-    if (m_jet_2_pt->EvalInstance() > 1E-5 && m_jet_2_pdgId->EvalInstance() != 21)
+    else
     {
-      v.SetPtEtaPhiM(m_jet_2_pt->EvalInstance(),m_jet_2_eta->EvalInstance(),m_jet_2_phi->EvalInstance(),m_jet_2_m->EvalInstance());
-      p3[0] = v.E();
-      p3[1] = v.Px();
-      p3[2] = v.Py();
-      p3[3] = v.Pz();
-      pjets.push_back(p3);
-      flavourOut.push_back(m_jet_2_pdgId->EvalInstance());
-    }
-    
-    if (m_jet_0_pdgId->EvalInstance() == 21)
-    {
-      v.SetPtEtaPhiM(m_jet_0_pt->EvalInstance(),m_jet_0_eta->EvalInstance(),m_jet_0_phi->EvalInstance(),m_jet_0_m->EvalInstance());
-      p1[0] = v.E();
-      p1[1] = v.Px();
-      p1[2] = v.Py();
-      p1[3] = v.Pz();
-      pjets.push_back(p1);
-      flavourOut.push_back(0);
-    }
-
-    if (m_jet_1_pdgId->EvalInstance() == 21)
-    {
-      v.SetPtEtaPhiM(m_jet_1_pt->EvalInstance(),m_jet_1_eta->EvalInstance(),m_jet_1_phi->EvalInstance(),m_jet_1_m->EvalInstance());
-      p2[0] = v.E();
-      p2[1] = v.Px();
-      p2[2] = v.Py();
-      p2[3] = v.Pz();
+      p2[0] = 0;
+      p2[1] = 0;
+      p2[2] = 0;
+      p2[3] = 0;
       pjets.push_back(p2);
-      flavourOut.push_back(0);
     }
 
-    if (m_jet_2_pt->EvalInstance() > 1E-5 && m_jet_2_pdgId->EvalInstance() == 21)
-    {
-      v.SetPtEtaPhiM(m_jet_2_pt->EvalInstance(),m_jet_2_eta->EvalInstance(),m_jet_2_phi->EvalInstance(),m_jet_2_m->EvalInstance());
-      p3[0] = v.E();
-      p3[1] = v.Px();
-      p3[2] = v.Py();
-      p3[3] = v.Pz();
-      pjets.push_back(p3);
-      flavourOut.push_back(0);
-    }
-    */
 
-    //v.SetPtEtaPhiM(m_jet_2_pt->EvalInstance(),m_jet_2_eta->EvalInstance(),m_jet_2_phi->EvalInstance(),m_jet_2_m->EvalInstance());
-    //if (v.Pt()>0)
-    //{
-    //p3[0] = v.E();
-    //p3[1] = v.Px();
-    //p3[2] = v.Py();
-    //p3[3] = v.Pz();
-    //pjets.push_back(p3);
-    //if (m_jet_2_pdgId->EvalInstance() == 21)
-    //flavourOut.push_back(0);
-    //else
-    //flavourOut.push_back(m_jet_2_pdgId->EvalInstance());
-    //npafin = 3;
-    //}
-    //ERRORclass("pushing back 3 - 1");
-    //if (v.Pt() > 0)
-    //if (m_jet_0_pdgId->EvalInstance() != 21 && pjets.size() < 3)
-    //{
-    //v.SetPtEtaPhiM(m_jet_0_pt->EvalInstance(),m_jet_0_eta->EvalInstance(),m_jet_0_phi->EvalInstance(),m_jet_0_m->EvalInstance());
-    //p1[0] = v.E();
-    //p1[1] = v.Px();
-    //p1[2] = v.Py();
-    //p1[3] = v.Pz();
-    //pjets.push_back(p1);
-    //flavourOut.push_back(m_jet_0_pdgId->EvalInstance());
-    //}
-    //if (m_jet_1_pdgId->EvalInstance() != 21 && pjets.size() < 3)
-    //{
-    //v.SetPtEtaPhiM(m_jet_1_pt->EvalInstance(),m_jet_1_eta->EvalInstance(),m_jet_1_phi->EvalInstance(),m_jet_1_m->EvalInstance());
-    //p2[0] = v.E();
-    //p2[1] = v.Px();
-    //p2[2] = v.Py();
-    //p2[3] = v.Pz();
-    //pjets.push_back(p2);
-    //flavourOut.push_back(m_jet_1_pdgId->EvalInstance());
-    //}
-
-    //for (unsigned int i=0; i<flavourIn.size(); ++i)
-    //ERRORclass("i = %i flav = %i",i,flavourIn[i]);
-    //for (unsigned int i=0; i<flavourOut.size(); ++i)
-    //ERRORclass("i = %i flavOut = %i",i,flavourOut[i]);
-  }
-
-  else
-  {
-    DEBUGclass("Running reco observable");
-    
-    v0.SetPtEtaPhiM(m_jet_0_pt->EvalInstance(),m_jet_0_eta->EvalInstance(),m_jet_0_phi->EvalInstance(),m_jet_0_m->EvalInstance());
-    v1.SetPtEtaPhiM(m_jet_1_pt->EvalInstance(),m_jet_1_eta->EvalInstance(),m_jet_1_phi->EvalInstance(),m_jet_1_m->EvalInstance());
-    p1[0] = v0.E();
-    p1[1] = v0.Px();
-    p1[2] = v0.Py();
-    p1[3] = v0.Pz();
-    pjets.push_back(p1);
-    TLorentzVector h;
-    h.SetPtEtaPhiM(m_h_pt->EvalInstance(),m_h_eta->EvalInstance(),m_h_phi->EvalInstance(),m_h_m->EvalInstance());
-    TLorentzVector fO = (h + v0 + v1);
-    x1 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity());
-    x2 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity()*-1);
-
-
-    p2[0] = v1.E();
-    p2[1] = v1.Px();
-    p2[2] = v1.Py();
-    p2[3] = v1.Pz();
-    pjets.push_back(p2);
-  }
 
 
   v0.SetPtEtaPhiM(m_h_pt->EvalInstance(),m_h_eta->EvalInstance(),m_h_phi->EvalInstance(),m_h_m->EvalInstance());
   double phiggs[] = {v0.E(),v0.Px(),v0.Py(),v0.Pz()};     
 
-  unsigned int npafin = pjets.size();
+  unsigned int npafin = jetList.size();
  
 
 
@@ -375,7 +297,7 @@ double TQOptObsObservable::getValue() const {
     entry = 0;
   else if (m_var.Contains("2") || m_var.Contains("_quad"))
     entry = 1;
-  if (m_tags->getTagBoolDefault("isTruth") == kFALSE && x1<0.0000001)
+  if (m_tags->getTagBoolDefault("isReco",false) && x1<0.0000001)
   {
     ERRORclass("non-physical value for (reco) x1. Returning -1234!");
     return -1234;
@@ -395,15 +317,16 @@ double TQOptObsObservable::getValue() const {
     DEBUGclass("Inputs for weights calculation (j2): %f, %f, %f, %f",pjets[1][0],pjets[1][1],pjets[1][2],pjets[1][3]);
     DEBUGclass("Inputs for weights calculation (H): %f, %f, %f, %f",phiggs[0],phiggs[1],phiggs[2],phiggs[3]);
     retval = m_ooE->getWeightsDtilde(entry, eventNumber, ecm, mH , npafin,flavourIn[0],flavourIn[1],flavourOut[0],flavourOut[1],flavourOut[2],x1,x2,pjets[0],pjets[1],pjets[2],phiggs);
-    //if (TMath::Abs(retval) < 1e-8)
-    //{
-    //
-    //ERRORclass("Inputs for weights calculation: ecm=%f, mH=%f, npafin=%i, fli[0]=%i, fli[1]=%i, flo[0]=%i, flo[1]=%i, flo[2]=%i, x1=%f, x2=%f",ecm,mH,npafin,flavourIn[0],flavourIn[1],flavourOut[0],flavourOut[1],flavourOut[2],x1,x2);
-    //ERRORclass("Inputs for weights calculation (j1): %f, %f, %f, %f",pjets[0][0],pjets[0][1],pjets[0][2],pjets[0][3]);
-    //ERRORclass("Inputs for weights calculation (j2): %f, %f, %f, %f",pjets[1][0],pjets[1][1],pjets[1][2],pjets[1][3]);
-    //ERRORclass("Inputs for weights calculation (j3): %f, %f, %f, %f",pjets[2][0],pjets[2][1],pjets[2][2],pjets[2][3]);
-    //ERRORclass("Inputs for weights calculation (H): %f, %f, %f, %f",phiggs[0],phiggs[1],phiggs[2],phiggs[3]);
-    //}
+    if (TMath::Abs(retval) < 1e-8)
+    {
+
+      ERRORclass("Number of gluons: %i",std::count(flavourOut.begin(),flavourOut.end(),0));
+      ERRORclass("Inputs for weights calculation: ecm=%f, mH=%f, npafin=%i, fli[0]=%i, fli[1]=%i, flo[0]=%i, flo[1]=%i, flo[2]=%i, x1=%f, x2=%f",ecm,mH,npafin,flavourIn[0],flavourIn[1],flavourOut[0],flavourOut[1],flavourOut[2],x1,x2);
+      ERRORclass("Inputs for weights calculation (j1): %f, %f, %f, %f",pjets[0][0],pjets[0][1],pjets[0][2],pjets[0][3]);
+      ERRORclass("Inputs for weights calculation (j2): %f, %f, %f, %f",pjets[1][0],pjets[1][1],pjets[1][2],pjets[1][3]);
+      ERRORclass("Inputs for weights calculation (j3): %f, %f, %f, %f",pjets[2][0],pjets[2][1],pjets[2][2],pjets[2][3]);
+      ERRORclass("Inputs for weights calculation (H): %f, %f, %f, %f",phiggs[0],phiggs[1],phiggs[2],phiggs[3]);
+    }
   }
   else if (m_var.Contains("Reweight"))
   {
@@ -434,7 +357,7 @@ TObjArray* TQOptObsObservable::getBranchNames() const {
   TObjArray* retval = new TObjArray();
   retval->Add(new TObjString("event_number"));
 
-  if (m_tags->getTagBoolDefault("isTruth",false))
+  if (m_tags->getTagBoolDefault("isReco",false) == false)
   {
     retval->Add(new TObjString("truth_opt_obs_parton_0_pt"));
     retval->Add(new TObjString("truth_opt_obs_parton_0_eta"));

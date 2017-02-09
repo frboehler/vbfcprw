@@ -5,14 +5,14 @@ def main():
     import QFramework
     dtPos = 0.3
     dtNeg = -0.2
-    oo1truth = TQOptObsObservable("OptimalObservable1","isTruth=true");
-    oo2truth = TQOptObsObservable("OptimalObservable2","isTruth=true");
-    wdtlin = TQOptObsObservable("WeightDTilde_lin",'isTruth=true');
-    wdtquad = TQOptObsObservable("WeightDTilde_quad",'isTruth=true');
-    rwPos = TQOptObsObservable("Reweight", "isTruth=true", dtPos);
-    rwNeg = TQOptObsObservable("Reweight", "isTruth=true", dtNeg);
-    oo1reco = TQOptObsObservable("OptimalObservable1");
-    oo2reco = TQOptObsObservable("OptimalObservable2");
+    oo1truth = TQOptObsObservable("OptimalObservable1");
+    oo2truth = TQOptObsObservable("OptimalObservable2");
+    wdtlin = TQOptObsObservable("WeightDTilde_lin");
+    wdtquad = TQOptObsObservable("WeightDTilde_quad");
+    rwPos = TQOptObsObservable("Reweight", '', dtPos);
+    rwNeg = TQOptObsObservable("Reweight", '', dtNeg);
+    oo1reco = TQOptObsObservable("OptimalObservable1",'isReco=true');
+    oo2reco = TQOptObsObservable("OptimalObservable2",'isReco=true');
     QFramework.TQObservable.addObservable(oo1truth,"OO1Truth");
     QFramework.TQObservable.addObservable(oo2truth,"OO2Truth");
     QFramework.TQObservable.addObservable(oo1reco,"OO1Reco");

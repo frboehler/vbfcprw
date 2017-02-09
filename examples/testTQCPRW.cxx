@@ -6,8 +6,8 @@ int main(int argc, char* argv[])
   TQOptObsObservable *oo2 = new TQOptObsObservable("OptimalObservable2");
   TQOptObsObservable *wdtlin = new TQOptObsObservable("WeightDTilde_lin");
   TQOptObsObservable *wdtquad = new TQOptObsObservable("WeightDTilde_quad");
-  TQOptObsObservable *rw0 = new TQOptObsObservable("Reweight",0);
-  TQOptObsObservable *rw01 = new TQOptObsObservable("Reweight",0.1);
+  TQOptObsObservable *rw0 = new TQOptObsObservable("Reweight","",0);
+  TQOptObsObservable *rw01 = new TQOptObsObservable("Reweight","",0.1);
   TQObservable::addObservable(oo1,"OO1");
   TQObservable::addObservable(oo2,"OO2");
   TQObservable::addObservable(wdtlin,"weightDTilde_lin");
