@@ -54,53 +54,52 @@ bool TQOptObsObservable::initializeSelf(){
 
   if (m_tags->getTagBoolDefault("isReco",false) == false)
   {
-    m_jet_0_pt =    new TTreeFormula("truth_opt_obs_parton_0_pt",    "truth_opt_obs_parton_0_pt", fTree);
-    m_jet_0_eta =   new TTreeFormula("truth_opt_obs_parton_0_eta",   "truth_opt_obs_parton_0_eta",fTree);
-    m_jet_0_phi =   new TTreeFormula("truth_opt_obs_parton_0_phi",   "truth_opt_obs_parton_0_phi",fTree);
-    m_jet_0_m =     new TTreeFormula("truth_opt_obs_parton_0_m",     "truth_opt_obs_parton_0_m",  fTree);
-    m_jet_0_pdgId = new TTreeFormula("truth_opt_obs_parton_0_pdgId", "truth_opt_obs_parton_0_pdgId",  fTree);
+    m_jet_0_pz =    new TTreeFormula("truth_reweight_info_parton_0_pz",    "truth_reweight_info_parton_0_pz", fTree);
+    m_jet_0_pdgId = new TTreeFormula("truth_reweight_info_parton_0_pdgId", "truth_reweight_info_parton_0_pdgId",  fTree);
 
-    m_jet_1_pt =    new TTreeFormula("truth_opt_obs_parton_1_pt",    "truth_opt_obs_parton_1_pt", fTree);
-    m_jet_1_eta =   new TTreeFormula("truth_opt_obs_parton_1_eta",   "truth_opt_obs_parton_1_eta",fTree);
-    m_jet_1_phi =   new TTreeFormula("truth_opt_obs_parton_1_phi",   "truth_opt_obs_parton_1_phi",fTree);
-    m_jet_1_m =     new TTreeFormula("truth_opt_obs_parton_1_m",     "truth_opt_obs_parton_1_m",  fTree);
-    m_jet_1_pdgId = new TTreeFormula("truth_opt_obs_parton_1_pdgId", "truth_opt_obs_parton_1_pdgId",  fTree);
+    m_jet_1_pz =    new TTreeFormula("truth_reweight_info_parton_1_pz",    "truth_reweight_info_parton_1_pz", fTree);
+    m_jet_1_pdgId = new TTreeFormula("truth_reweight_info_parton_1_pdgId", "truth_reweight_info_parton_1_pdgId",  fTree);
 
-    m_jet_2_pt =    new TTreeFormula("truth_opt_obs_parton_2_pt",    "truth_opt_obs_parton_2_pt", fTree);
-    m_jet_2_eta =   new TTreeFormula("truth_opt_obs_parton_2_eta",   "truth_opt_obs_parton_2_eta",fTree);
-    m_jet_2_phi =   new TTreeFormula("truth_opt_obs_parton_2_phi",   "truth_opt_obs_parton_2_phi",fTree);
-    m_jet_2_m =     new TTreeFormula("truth_opt_obs_parton_2_m",     "truth_opt_obs_parton_2_m",  fTree);
-    m_jet_2_pdgId = new TTreeFormula("truth_opt_obs_parton_2_pdgId", "truth_opt_obs_parton_2_pdgId",  fTree);
+    m_jet_2_pt =    new TTreeFormula("truth_reweight_info_parton_2_pt",    "truth_reweight_info_parton_2_pt", fTree);
+    m_jet_2_eta =   new TTreeFormula("truth_reweight_info_parton_2_eta",   "truth_reweight_info_parton_2_eta",fTree);
+    m_jet_2_phi =   new TTreeFormula("truth_reweight_info_parton_2_phi",   "truth_reweight_info_parton_2_phi",fTree);
+    m_jet_2_m =     new TTreeFormula("truth_reweight_info_parton_2_m",     "truth_reweight_info_parton_2_m",  fTree);
+    m_jet_2_pdgId = new TTreeFormula("truth_reweight_info_parton_2_pdgId", "truth_reweight_info_parton_2_pdgId",  fTree);
 
-    m_h_pt =    new TTreeFormula("truth_opt_obs_higgs_pt",    "truth_opt_obs_higgs_pt", fTree);
-    m_h_eta =   new TTreeFormula("truth_opt_obs_higgs_eta",   "truth_opt_obs_higgs_eta",fTree);
-    m_h_phi =   new TTreeFormula("truth_opt_obs_higgs_phi",   "truth_opt_obs_higgs_phi",fTree);
-    m_h_m =     new TTreeFormula("truth_opt_obs_higgs_m",     "truth_opt_obs_higgs_m",  fTree);
+    m_jet_3_pt =    new TTreeFormula("truth_reweight_info_parton_3_pt",    "truth_reweight_info_parton_3_pt", fTree);
+    m_jet_3_eta =   new TTreeFormula("truth_reweight_info_parton_3_eta",   "truth_reweight_info_parton_3_eta",fTree);
+    m_jet_3_phi =   new TTreeFormula("truth_reweight_info_parton_3_phi",   "truth_reweight_info_parton_3_phi",fTree);
+    m_jet_3_m =     new TTreeFormula("truth_reweight_info_parton_3_m",     "truth_reweight_info_parton_3_m",  fTree);
+    m_jet_3_pdgId = new TTreeFormula("truth_reweight_info_parton_3_pdgId", "truth_reweight_info_parton_3_pdgId",  fTree);
 
-    m_x1 = new TTreeFormula("truth_event_info_Bjorken_x1","truth_event_info_Bjorken_x1",fTree);
-    m_x2 = new TTreeFormula("truth_event_info_Bjorken_x2","truth_event_info_Bjorken_x2",fTree);
+    m_jet_4_pt =    new TTreeFormula("truth_reweight_info_parton_4_pt",    "truth_reweight_info_parton_4_pt", fTree);
+    m_jet_4_eta =   new TTreeFormula("truth_reweight_info_parton_4_eta",   "truth_reweight_info_parton_4_eta",fTree);
+    m_jet_4_phi =   new TTreeFormula("truth_reweight_info_parton_4_phi",   "truth_reweight_info_parton_4_phi",fTree);
+    m_jet_4_m =     new TTreeFormula("truth_reweight_info_parton_4_m",     "truth_reweight_info_parton_4_m",  fTree);
+    m_jet_4_pdgId = new TTreeFormula("truth_reweight_info_parton_4_pdgId", "truth_reweight_info_parton_4_pdgId",  fTree);
 
-    m_pdgIn1 = new TTreeFormula("truth_event_info_pdgId1","truth_event_info_pdgId1", fTree);
-    m_pdgIn2 = new TTreeFormula("truth_event_info_pdgId2","truth_event_info_pdgId2", fTree);
-
+    m_h_pt =    new TTreeFormula("truth_reweight_info_higgs_pt",    "truth_reweight_info_higgs_pt", fTree);
+    m_h_eta =   new TTreeFormula("truth_reweight_info_higgs_eta",   "truth_reweight_info_higgs_eta",fTree);
+    m_h_phi =   new TTreeFormula("truth_reweight_info_higgs_phi",   "truth_reweight_info_higgs_phi",fTree);
+    m_h_m =     new TTreeFormula("truth_reweight_info_higgs_m",     "truth_reweight_info_higgs_m",  fTree);
   }
 
   else
   {
-    m_jet_0_pt =  new TTreeFormula("jet_0_pt", "jet_0_pt", fTree);
-    m_jet_0_eta = new TTreeFormula("jet_0_eta","jet_0_eta",fTree);
-    m_jet_0_phi = new TTreeFormula("jet_0_phi","jet_0_phi",fTree);
-    m_jet_0_m =   new TTreeFormula("jet_0_m",  "jet_0_m",  fTree);
+    m_jet_2_pt =  new TTreeFormula("jet_0_pt", "jet_0_pt", fTree);
+    m_jet_2_eta = new TTreeFormula("jet_0_eta","jet_0_eta",fTree);
+    m_jet_2_phi = new TTreeFormula("jet_0_phi","jet_0_phi",fTree);
+    m_jet_2_m =   new TTreeFormula("jet_0_m",  "jet_0_m",  fTree);
 
-    m_jet_1_pt =  new TTreeFormula("jet_1_pt", "jet_1_pt", fTree);
-    m_jet_1_eta = new TTreeFormula("jet_1_eta","jet_1_eta",fTree);
-    m_jet_1_phi = new TTreeFormula("jet_1_phi","jet_1_phi",fTree);
-    m_jet_1_m =   new TTreeFormula("jet_1_m",  "jet_1_m",  fTree);
+    m_jet_3_pt =  new TTreeFormula("jet_1_pt", "jet_1_pt", fTree);
+    m_jet_3_eta = new TTreeFormula("jet_1_eta","jet_1_eta",fTree);
+    m_jet_3_phi = new TTreeFormula("jet_1_phi","jet_1_phi",fTree);
+    m_jet_3_m =   new TTreeFormula("jet_1_m",  "jet_1_m",  fTree);
 
-    m_jet_2_pt =  new TTreeFormula("jet_2_pt", "jet_2_pt", fTree);
-    m_jet_2_eta = new TTreeFormula("jet_2_eta","jet_2_eta",fTree);
-    m_jet_2_phi = new TTreeFormula("jet_2_phi","jet_2_phi",fTree);
-    m_jet_2_m =   new TTreeFormula("jet_2_m",  "jet_2_m",  fTree);
+    m_jet_4_pt =  new TTreeFormula("jet_2_pt", "jet_2_pt", fTree);
+    m_jet_4_eta = new TTreeFormula("jet_2_eta","jet_2_eta",fTree);
+    m_jet_4_phi = new TTreeFormula("jet_2_phi","jet_2_phi",fTree);
+    m_jet_4_m =   new TTreeFormula("jet_2_m",  "jet_2_m",  fTree);
 
     m_h_pt = new TTreeFormula("lephad_mmc_maxw_pt","lephad_mmc_maxw_pt",fTree);
     m_h_eta = new TTreeFormula("lephad_mmc_maxw_eta","lephad_mmc_maxw_eta",fTree);
@@ -116,22 +115,25 @@ bool TQOptObsObservable::initializeSelf(){
 //______________________________________________________________________________________________
 
 bool TQOptObsObservable::finalizeSelf(){
+  DEBUGclass("Finalising...");
   delete m_ooE;
   delete m_EventNumber;
-  delete m_jet_0_pt;
-  delete m_jet_0_eta;
-  delete m_jet_0_phi;
-  delete m_jet_0_m;
 
-  delete m_jet_1_pt;
-  delete m_jet_1_eta;
-  delete m_jet_1_phi;
-  delete m_jet_1_m;
 
   delete m_jet_2_pt;
   delete m_jet_2_eta;
   delete m_jet_2_phi;
   delete m_jet_2_m;
+
+  delete m_jet_3_pt;
+  delete m_jet_3_eta;
+  delete m_jet_3_phi;
+  delete m_jet_3_m;
+
+  delete m_jet_4_pt;
+  delete m_jet_4_eta;
+  delete m_jet_4_phi;
+  delete m_jet_4_m;
 
   delete m_h_pt;
   delete m_h_eta;
@@ -143,10 +145,10 @@ bool TQOptObsObservable::finalizeSelf(){
     delete m_jet_0_pdgId;
     delete m_jet_1_pdgId;
     delete m_jet_2_pdgId;
-    delete m_x1;
-    delete m_x2;
-    delete m_pdgIn1;
-    delete m_pdgIn2;
+    delete m_jet_3_pdgId;
+    delete m_jet_4_pdgId;
+    delete m_jet_0_pz;
+    delete m_jet_1_pz;
   }
 
 
@@ -176,7 +178,7 @@ double TQOptObsObservable::getValue() const {
 
   double x1,x2;
 
-
+  double ptCutoff = m_tags->getTagDoubleDefault("pTCutoff",0.0);
 
   // find the two non-gluon final state partons
   std::vector<double*> pjets;
@@ -188,14 +190,14 @@ double TQOptObsObservable::getValue() const {
 
   h.SetPtEtaPhiM(m_h_pt->EvalInstance(),m_h_eta->EvalInstance(),m_h_phi->EvalInstance(),m_h_m->EvalInstance());
 
-  v0.SetPtEtaPhiM(m_jet_0_pt->EvalInstance(),m_jet_0_eta->EvalInstance(),m_jet_0_phi->EvalInstance(),m_jet_0_m->EvalInstance());
+  v0.SetPtEtaPhiM(m_jet_2_pt->EvalInstance(),m_jet_2_eta->EvalInstance(),m_jet_2_phi->EvalInstance(),m_jet_2_m->EvalInstance());
   jetList.push_back(std::make_pair(0,v0.Eta()));
   
-  v1.SetPtEtaPhiM(m_jet_1_pt->EvalInstance(),m_jet_1_eta->EvalInstance(),m_jet_1_phi->EvalInstance(),m_jet_1_m->EvalInstance());
+  v1.SetPtEtaPhiM(m_jet_3_pt->EvalInstance(),m_jet_3_eta->EvalInstance(),m_jet_3_phi->EvalInstance(),m_jet_3_m->EvalInstance());
   jetList.push_back(std::make_pair(1,v1.Eta()));
   
-  v2.SetPtEtaPhiM(m_jet_2_pt->EvalInstance(),m_jet_2_eta->EvalInstance(),m_jet_2_phi->EvalInstance(),m_jet_2_m->EvalInstance());
-  if (m_jet_2_pt->EvalInstance() > 0.0)
+  v2.SetPtEtaPhiM(m_jet_4_pt->EvalInstance(),m_jet_4_eta->EvalInstance(),m_jet_4_phi->EvalInstance(),m_jet_4_m->EvalInstance());
+  if (m_jet_4_pt->EvalInstance() > ptCutoff)
   {
     jetList.push_back(std::make_pair(2,v2.Eta()));
   }
@@ -204,23 +206,18 @@ double TQOptObsObservable::getValue() const {
   if (m_tags->getTagBoolDefault("isReco",false) == false)
   {
     DEBUGclass("Running truth observable");
-    x1 = m_x1->EvalInstance();           
-    x2 = m_x2->EvalInstance();
-    flavourIn.push_back((m_pdgIn1->EvalInstance() == 21) ? 0 : m_pdgIn1->EvalInstance());
-    flavourIn.push_back((m_pdgIn2->EvalInstance() == 21) ? 0 : m_pdgIn2->EvalInstance());
+    x1 = TMath::Abs(m_jet_0_pz->EvalInstance()/(ecm*0.5));           
+    x2 = TMath::Abs(m_jet_1_pz->EvalInstance()/(ecm*0.5));           
+    flavourIn.push_back((m_jet_0_pdgId->EvalInstance() == 21) ? 0 : m_jet_0_pdgId->EvalInstance());
+    flavourIn.push_back((m_jet_1_pdgId->EvalInstance() == 21) ? 0 : m_jet_1_pdgId->EvalInstance());
 
-    jets.push_back(std::make_pair(v0, (m_jet_0_pdgId->EvalInstance() == 21) ? 0 : m_jet_0_pdgId->EvalInstance()));
-    jets.push_back(std::make_pair(v1, (m_jet_1_pdgId->EvalInstance() == 21) ? 0 : m_jet_1_pdgId->EvalInstance()));
-    if (m_jet_2_pt->EvalInstance() > 0.0)
+    jets.push_back(std::make_pair(v0, (m_jet_2_pdgId->EvalInstance() == 21) ? 0 : m_jet_2_pdgId->EvalInstance()));
+    jets.push_back(std::make_pair(v1, (m_jet_3_pdgId->EvalInstance() == 21) ? 0 : m_jet_3_pdgId->EvalInstance()));
+    if (m_jet_4_pt->EvalInstance() > ptCutoff)
     {
-      jets.push_back(std::make_pair(v2, (m_jet_2_pdgId->EvalInstance() == 21) ? 0 : m_jet_2_pdgId->EvalInstance()));
+      jets.push_back(std::make_pair(v2, (m_jet_4_pdgId->EvalInstance() == 21) ? 0 : m_jet_4_pdgId->EvalInstance()));
     }
 
-    if (m_tags->getTagBoolDefault("isDebugRun",false))
-    {
-      INFOclass("Pt of the hpp-system: %f",(h+v0+v1).Pt());
-      INFOclass("Pt of the hppp-system: %f",(h+v0+v1+v2).Pt());
-    }
 
 
     for (unsigned int i=0;i<jetList.size();++i)
@@ -230,6 +227,38 @@ double TQOptObsObservable::getValue() const {
     int nG = std::count(flavourOut.begin(),flavourOut.end(),0);
     if (nG > 1)
       ERRORclass("Found %i gluons in the final state. check input!",nG);
+
+    if (m_var.Contains("hqqq"))
+    {
+      if (jets.size() == 3)
+        return (h+v0+v1+v2).Pt();
+      else
+        return (h+v0+v1).Pt();
+    }
+
+    if (m_var.Contains("npafin"))
+      return jets.size();
+
+    if (m_tags->getTagBoolDefault("isDebugRun",false) && nG == 0 && jets.size() == 3)
+    {
+      INFOclass("Event %i",eventNumber);
+      INFOclass("Incoming partons: (x1=%f, f1=%i; x2=%f, f2=%i",x1,flavourIn.at(0),x2,flavourIn.at(1));
+      INFOclass("Pt of the hqq (0,1)-system: %f",(h+v0+v1).Pt());
+      INFOclass("Pt of the hqq (0,2)-system: %f",(h+v0+v2).Pt());
+      INFOclass("Pt of the hqq (1,2)-system: %f",(h+v2+v1).Pt());
+      INFOclass("Pt of the hqqq-system: %f",(h+v0+v1+v2).Pt());
+      for (unsigned int i=0; i<jets.size(); ++i)
+      {
+        INFOclass("kinematics of jet %i: Pt = %f, eta=%g, phi=%f, flavour=%i",i,jets.at(i).first.Pt(),jets.at(i).first.Eta(),jets.at(i).first.Phi(),jets.at(i).second);
+      }
+      INFOclass("dR (0,1) = %f",jets.at(0).first.DeltaR(jets.at(1).first));
+      if (jets.size() == 3)
+      {
+        INFOclass("dR (0,2) = %f",jets.at(0).first.DeltaR(jets.at(2).first));
+        INFOclass("dR (1,2) = %f",jets.at(1).first.DeltaR(jets.at(2).first));
+      }
+      INFOclass("========");
+    }
     if (it != flavourOut.end())
     {
       flavourOut.erase(it);
@@ -249,7 +278,7 @@ double TQOptObsObservable::getValue() const {
 
     jets.push_back(std::make_pair(v0, 0));
     jets.push_back(std::make_pair(v1, 0));
-    if (m_jet_2_pt->EvalInstance() > 0.0)
+    if (m_jet_4_pt->EvalInstance() > 0.0)
     {
       jets.push_back(std::make_pair(v2, 0));
     }
@@ -305,7 +334,7 @@ double TQOptObsObservable::getValue() const {
     entry = 1;
   if (m_tags->getTagBoolDefault("isReco",false) && x1<0.0000001)
   {
-    ERRORclass("non-physical value for (reco) x1. Returning -1234!");
+    ERRORclass("non-physical value for (reco) x1=%f when trying to calculate variabe %s. Returning -1234!",x1,m_var.Data());
     return -1234;
   }
   if (m_var.Contains("OptimalObservable"))
@@ -365,35 +394,34 @@ TObjArray* TQOptObsObservable::getBranchNames() const {
 
   if (m_tags->getTagBoolDefault("isReco",false) == false)
   {
-    retval->Add(new TObjString("truth_opt_obs_parton_0_pt"));
-    retval->Add(new TObjString("truth_opt_obs_parton_0_eta"));
-    retval->Add(new TObjString("truth_opt_obs_parton_0_phi"));
-    retval->Add(new TObjString("truth_opt_obs_parton_0_m"));
-    retval->Add(new TObjString("truth_opt_obs_parton_0_pdgId"));
+    retval->Add(new TObjString("truth_reweight_info_parton_0_pz"));
+    retval->Add(new TObjString("truth_reweight_info_parton_0_pdgId"));
 
-    retval->Add(new TObjString("truth_opt_obs_parton_1_pt"));
-    retval->Add(new TObjString("truth_opt_obs_parton_1_eta"));
-    retval->Add(new TObjString("truth_opt_obs_parton_1_phi"));
-    retval->Add(new TObjString("truth_opt_obs_parton_1_m"));
-    retval->Add(new TObjString("truth_opt_obs_parton_1_pdgId"));
+    retval->Add(new TObjString("truth_reweight_info_parton_1_pz"));
+    retval->Add(new TObjString("truth_reweight_info_parton_1_pdgId"));
 
-    retval->Add(new TObjString("truth_opt_obs_parton_2_pt"));
-    retval->Add(new TObjString("truth_opt_obs_parton_2_eta"));
-    retval->Add(new TObjString("truth_opt_obs_parton_2_phi"));
-    retval->Add(new TObjString("truth_opt_obs_parton_2_m"));
-    retval->Add(new TObjString("truth_opt_obs_parton_2_pdgId"));
+    retval->Add(new TObjString("truth_reweight_info_parton_2_pt"));
+    retval->Add(new TObjString("truth_reweight_info_parton_2_eta"));
+    retval->Add(new TObjString("truth_reweight_info_parton_2_phi"));
+    retval->Add(new TObjString("truth_reweight_info_parton_2_m"));
+    retval->Add(new TObjString("truth_reweight_info_parton_2_pdgId"));
 
-    retval->Add(new TObjString("truth_opt_obs_higgs_pt"));
-    retval->Add(new TObjString("truth_opt_obs_higgs_eta"));
-    retval->Add(new TObjString("truth_opt_obs_higgs_phi"));
-    retval->Add(new TObjString("truth_opt_obs_higgs_m"));
+    retval->Add(new TObjString("truth_reweight_info_parton_3_pt"));
+    retval->Add(new TObjString("truth_reweight_info_parton_3_eta"));
+    retval->Add(new TObjString("truth_reweight_info_parton_3_phi"));
+    retval->Add(new TObjString("truth_reweight_info_parton_3_m"));
+    retval->Add(new TObjString("truth_reweight_info_parton_3_pdgId"));
 
-    retval->Add(new TObjString("truth_event_info_Bjorken_x1"));
-    retval->Add(new TObjString("truth_event_info_Bjorken_x2"));
+    retval->Add(new TObjString("truth_reweight_info_parton_4_pt"));
+    retval->Add(new TObjString("truth_reweight_info_parton_4_eta"));
+    retval->Add(new TObjString("truth_reweight_info_parton_4_phi"));
+    retval->Add(new TObjString("truth_reweight_info_parton_4_m"));
+    retval->Add(new TObjString("truth_reweight_info_parton_4_pdgId"));
 
-    retval->Add(new TObjString("truth_event_info_pdgId1"));
-    retval->Add(new TObjString("truth_event_info_pdgId2"));
-
+    retval->Add(new TObjString("truth_reweight_info_higgs_pt"));
+    retval->Add(new TObjString("truth_reweight_info_higgs_eta"));
+    retval->Add(new TObjString("truth_reweight_info_higgs_phi"));
+    retval->Add(new TObjString("truth_reweight_info_higgs_m"));
   }
 
   else
