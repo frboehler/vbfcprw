@@ -272,7 +272,14 @@ double TQOptObsObservable::getValue() const {
   else
   {
     DEBUGclass("Running reco observable");
-    TLorentzVector fO = (h + v0 + v1);
+
+    TLorentzVector fO;
+
+    if (jets.size() == 3)
+      fO = (h + v0 + v1 + v2);
+    else
+      fO = (h + v0 + v1);
+    
     x1 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity());
     x2 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity()*-1);
 
