@@ -44,6 +44,16 @@ protected:
   TTreeFormula *m_h_eta;
   TTreeFormula *m_h_phi;
   TTreeFormula *m_h_m;
+
+  TTreeFormula *m_jets_pt_vec;
+  TTreeFormula *m_jets_eta_vec;
+  TTreeFormula *m_jets_phi_vec;
+  TTreeFormula *m_jets_m_vec;
+  TTreeFormula *m_h_pt_vec;
+  TTreeFormula *m_h_eta_vec;
+  TTreeFormula *m_h_phi_vec;
+  TTreeFormula *m_h_m_vec;
+
   OptObsEventStore *m_ooE = 0;
 
 struct sortClass {
