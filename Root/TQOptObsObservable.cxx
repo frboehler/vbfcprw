@@ -116,7 +116,6 @@ bool TQOptObsObservable::initializeSelf(){
 
 bool TQOptObsObservable::finalizeSelf(){
   DEBUGclass("Finalising...");
-  delete m_ooE;
   delete m_EventNumber;
 
 
@@ -159,6 +158,7 @@ bool TQOptObsObservable::finalizeSelf(){
 //______________________________________________________________________________________________
 
 TQOptObsObservable::~TQOptObsObservable(){
+  delete m_ooE;
 }
 
 
