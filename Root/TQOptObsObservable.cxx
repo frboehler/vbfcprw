@@ -3,7 +3,7 @@
 ClassImp(TQOptObsObservable)
 #include "QFramework/TQUtils.h"
 
-  //#define _DEBUG_
+//#define _DEBUG_
 #include "QFramework/TQLibrary.h"
 #include "TSystem.h"
 #include "TLorentzVector.h"
@@ -15,8 +15,7 @@ bool TQOptObsObservable::init(TString variable, double dtilde)
 {
   m_ooE = new OptObsEventStore();
   m_ooE->initPDFSet(m_tags->getTagStringDefault("PDFset","CT10").Data(),0,91.2);
-  m_var = variable;
-  m_dtilde = dtilde;
+
   return true;
 }
 TQOptObsObservable::TQOptObsObservable(TString variable, TQTaggable *tags, double dtilde) :
@@ -24,14 +23,16 @@ TQTreeObservable()
 {
   // default constructor
   m_tags = tags;
-  this->init(variable,dtilde);
+  m_var = variable;
+  m_dtilde = dtilde;
 }
 TQOptObsObservable::TQOptObsObservable(TString variable, double dtilde) :
 TQTreeObservable()
 {
   // default constructor
   m_tags = new TQTaggable();
-  this->init(variable,dtilde);
+  m_var = variable;
+  m_dtilde = dtilde;
 }
 
 TQOptObsObservable::TQOptObsObservable(TString variable, TString tags, double dtilde) :
@@ -40,7 +41,8 @@ TQTreeObservable()
   // default constructor
   m_tags = new TQTaggable();
   m_tags->importTags(tags);
-  this->init(variable,dtilde);
+  m_var = variable;
+  m_dtilde = dtilde;
 }
 
 
@@ -49,6 +51,8 @@ TQTreeObservable()
 bool TQOptObsObservable::initializeSelf(){
   // initialize the formula of this observable
   DEBUGclass("initializing ...");
+
+  init(m_var,m_dtilde);
 
   m_EventNumber = new TTreeFormula("event_number","event_number",fTree);
 
@@ -275,11 +279,8 @@ double TQOptObsObservable::getValue() const {
 
     TLorentzVector fO;
 
-    if (jets.size() == 3)
-      fO = (h + v0 + v1 + v2);
-    else
-      fO = (h + v0 + v1);
-    
+    fO = (h + v0 + v1);
+
     x1 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity());
     x2 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity()*-1);
 
@@ -350,7 +351,10 @@ double TQOptObsObservable::getValue() const {
     DEBUGclass("Inputs for OO calculation (j1): %f, %f, %f, %f",pjets[0][0],pjets[0][1],pjets[0][2],pjets[0][3]);
     DEBUGclass("Inputs for OO calculation (j2): %f, %f, %f, %f",pjets[1][0],pjets[1][1],pjets[1][2],pjets[1][3]);
     DEBUGclass("Inputs for OO calculation (H): %f, %f, %f, %f",phiggs[0],phiggs[1],phiggs[2],phiggs[3]);
-    retval = m_ooE->getOptObs(entry, eventNumber, ecm, mH ,x1,x2,Q,pjets[0],pjets[1],phiggs);
+    if (pjets[0][0] > 0. && pjets[1][0] > 0. && phiggs[0] > 0.)
+      {
+	retval = m_ooE->getOptObs(entry, eventNumber, ecm, mH ,x1,x2,Q,pjets[0],pjets[1],phiggs);
+      }
   }
   else if (m_var.Contains("WeightDTilde"))
   {
