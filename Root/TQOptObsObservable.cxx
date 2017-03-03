@@ -15,7 +15,8 @@ bool TQOptObsObservable::init(TString variable, double dtilde)
 {
   m_ooE = new OptObsEventStore();
   m_ooE->initPDFSet(m_tags->getTagStringDefault("PDFset","CT10").Data(),0,91.2);
-
+  m_var = variable;
+  m_dtilde = dtilde;
   return true;
 }
 TQOptObsObservable::TQOptObsObservable(TString variable, TQTaggable *tags, double dtilde) :
@@ -23,16 +24,14 @@ TQTreeObservable()
 {
   // default constructor
   m_tags = tags;
-  m_var = variable;
-  m_dtilde = dtilde;
+  this->init(variable,dtilde);
 }
 TQOptObsObservable::TQOptObsObservable(TString variable, double dtilde) :
 TQTreeObservable()
 {
   // default constructor
   m_tags = new TQTaggable();
-  m_var = variable;
-  m_dtilde = dtilde;
+  this->init(variable,dtilde);
 }
 
 TQOptObsObservable::TQOptObsObservable(TString variable, TString tags, double dtilde) :
@@ -41,8 +40,7 @@ TQTreeObservable()
   // default constructor
   m_tags = new TQTaggable();
   m_tags->importTags(tags);
-  m_var = variable;
-  m_dtilde = dtilde;
+  this->init(variable,dtilde);
 }
 
 
@@ -51,8 +49,6 @@ TQTreeObservable()
 bool TQOptObsObservable::initializeSelf(){
   // initialize the formula of this observable
   DEBUGclass("initializing ...");
-
-  init(m_var,m_dtilde);
 
   m_EventNumber = new TTreeFormula("event_number","event_number",fTree);
 
@@ -120,7 +116,7 @@ bool TQOptObsObservable::initializeSelf(){
 
 bool TQOptObsObservable::finalizeSelf(){
   DEBUGclass("Finalising...");
-  delete m_ooE;
+
   delete m_EventNumber;
 
 
@@ -163,6 +159,7 @@ bool TQOptObsObservable::finalizeSelf(){
 //______________________________________________________________________________________________
 
 TQOptObsObservable::~TQOptObsObservable(){
+  delete m_ooE;
 }
 
 
@@ -178,7 +175,7 @@ double TQOptObsObservable::getValue() const {
   double mH = m_h_m->EvalInstance();
 
 
-  int eventNumber = m_EventNumber->EvalInstance();
+  ULong64_t eventNumber = m_EventNumber->EvalInstance();
 
   double x1,x2;
 
@@ -245,7 +242,7 @@ double TQOptObsObservable::getValue() const {
 
     if (m_tags->getTagBoolDefault("isDebugRun",false) && nG == 0 && jets.size() == 3)
     {
-      INFOclass("Event %i",eventNumber);
+      INFOclass("Event %lu",eventNumber);
       INFOclass("Incoming partons: (x1=%f, f1=%i; x2=%f, f2=%i",x1,flavourIn.at(0),x2,flavourIn.at(1));
       INFOclass("Pt of the hqq (0,1)-system: %f",(h+v0+v1).Pt());
       INFOclass("Pt of the hqq (0,2)-system: %f",(h+v0+v2).Pt());
@@ -388,7 +385,7 @@ double TQOptObsObservable::getValue() const {
         npafin,flavourIn[0],flavourIn[1],flavourOut[0],flavourOut[1],flavourOut[2],
         x1,x2,pjets[0],pjets[1],pjets[2],phiggs);
   }
-  DEBUGclass("Returning %f for variable %s in Event %i",retval,m_var.Data(),eventNumber);
+  DEBUGclass("Returning %f for variable %s in Event %lu",retval,m_var.Data(),eventNumber);
   return retval;
 }
 
