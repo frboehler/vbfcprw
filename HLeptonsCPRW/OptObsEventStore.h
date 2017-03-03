@@ -5,8 +5,8 @@
 
 class OptObsEventStore {
   private:
-    std::pair< std::pair<double,double> , int > m_wdt = std::make_pair(std::make_pair(-1234,-1234) , -1);
-    std::pair< std::pair<double,double> , int > m_oo = std::make_pair(std::make_pair(-1234,-1234) , -1);
+    std::pair< std::pair<double,double> , ULong64_t > m_wdt = std::make_pair(std::make_pair(-1234,-1234) , -1);
+    std::pair< std::pair<double,double> , ULong64_t > m_oo = std::make_pair(std::make_pair(-1234,-1234) , -1);
     std::vector<double> getLHAPDF(double Q, double x);
     bool m_isInitialized = false;
   public:
@@ -22,8 +22,8 @@ class OptObsEventStore {
       return HLeptonsCPRW::getReweight(ecm,mH,ipara,rsmin,din,dbin,dtin,dtbin,lambdahvvin, a1hwwin,  a2hwwin,  a3hwwin,  a1haain,  a2haain,  a3haain, a1hazin,   a2hazin,  a3hazin,  a1hzzin,  a2hzzin,  a3hzzin, npafin,  iflin1,  iflin2,  iflout1,  iflout2,  iflout3, x1,  x2,  pjet1,  pjet2,  pjet3,  phiggs);
     }
 
-    double getWeightsDtilde(int entry, int EventNumber, double ecm, double mH,int npafin, int ifl1in,int ifl2in,int ifl1out, int ifl2out, int ifl3out, double x1, double x2, double* pjet1, double *pjet2, double *pjet3, double *phiggs);
-    double getOptObs(int entry, int EventNumber, double ecm,double mH,double x1,double x2,double Q, double* pjet1, double* pjet2, double* phiggs);
+    double getWeightsDtilde(int entry, ULong64_t EventNumber, double ecm, double mH,int npafin, int ifl1in,int ifl2in,int ifl1out, int ifl2out, int ifl3out, double x1, double x2, double* pjet1, double *pjet2, double *pjet3, double *phiggs);
+    double getOptObs(int entry, ULong64_t EventNumber, double ecm,double mH,double x1,double x2,double Q, double* pjet1, double* pjet2, double* phiggs);
 
     void initPDFSet(std::string,int,double);
 };

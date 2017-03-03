@@ -4,20 +4,21 @@
 void OptObsEventStore::initPDFSet(std::string NAME, int SUBSET, double mZ)
 {
   LHAPDF::initPDFSet(NAME, LHAPDF::LHGRID, SUBSET);
-    std::cout << "alphas(mZ) = " << LHAPDF::alphasPDF(mZ) << std::endl;
-    std::cout << "qcdlam4    = " << LHAPDF::getLam4(SUBSET) << std::endl;
-    std::cout << "qcdlam5    = " << LHAPDF::getLam5(SUBSET) << std::endl;
-    std::cout << "orderPDF   = " << LHAPDF::getOrderPDF() << std::endl;
-    std::cout << "xmin       = " << LHAPDF::getXmin(SUBSET) << std::endl;
-    std::cout << "xmax       = " << LHAPDF::getXmax(SUBSET) << std::endl;
-    std::cout << "q2min      = " << LHAPDF::getQ2min(SUBSET) << std::endl;
-    std::cout << "q2max      = " << LHAPDF::getQ2max(SUBSET) << std::endl;
-    std::cout << "orderalfas = " << LHAPDF::getOrderAlphaS() << std::endl;
-    std::cout << "num flav   = " << LHAPDF::getNf() << std::endl;
-    std::cout << "name       = " << NAME << std::endl;
-    std::cout << "number     = " << LHAPDF::numberPDF() << std::endl;
-    std::cout << std::endl;
-    m_isInitialized = true;
+  std::cout << "alphas(mZ) = " << LHAPDF::alphasPDF(mZ) << std::endl;
+  std::cout << "qcdlam4    = " << LHAPDF::getLam4(SUBSET) << std::endl;
+  std::cout << "qcdlam5    = " << LHAPDF::getLam5(SUBSET) << std::endl;
+  std::cout << "orderPDF   = " << LHAPDF::getOrderPDF() << std::endl;
+  std::cout << "xmin       = " << LHAPDF::getXmin(SUBSET) << std::endl;
+  std::cout << "xmax       = " << LHAPDF::getXmax(SUBSET) << std::endl;
+  std::cout << "q2min      = " << LHAPDF::getQ2min(SUBSET) << std::endl;
+  std::cout << "q2max      = " << LHAPDF::getQ2max(SUBSET) << std::endl;
+  std::cout << "orderalfas = " << LHAPDF::getOrderAlphaS() << std::endl;
+  std::cout << "num flav   = " << LHAPDF::getNf() << std::endl;
+  std::cout << "name       = " << NAME << std::endl;
+  std::cout << "number     = " << LHAPDF::numberPDF() << std::endl;
+  std::cout << std::endl;
+
+  m_isInitialized = true;
 }
 
 std::vector<double> OptObsEventStore::getLHAPDF(double Q, double x){
@@ -40,7 +41,7 @@ std::vector<double> OptObsEventStore::getLHAPDF(double Q, double x){
 }
 
 
-double OptObsEventStore::getOptObs(int entry, int EventNumber, double ecm,double mH,double x1,double x2,double Q, double* pjet1, double* pjet2, double* phiggs)
+double OptObsEventStore::getOptObs(int entry, ULong64_t EventNumber, double ecm,double mH,double x1,double x2,double Q, double* pjet1, double* pjet2, double* phiggs)
 {
   double a_pdf1[13];
   double a_pdf2[13];
@@ -70,7 +71,7 @@ double OptObsEventStore::getOptObs(int entry, int EventNumber, double ecm,double
 }
 
 
-double OptObsEventStore::getWeightsDtilde(int entry, int EventNumber, double ecm, double mH,int npafin, int ifl1in,int ifl2in,int ifl1out, int ifl2out, int ifl3out, double x1, double x2, double* pjet1, double *pjet2, double *pjet3, double *phiggs)
+double OptObsEventStore::getWeightsDtilde(int entry, ULong64_t EventNumber, double ecm, double mH,int npafin, int ifl1in,int ifl2in,int ifl1out, int ifl2out, int ifl3out, double x1, double x2, double* pjet1, double *pjet2, double *pjet3, double *phiggs)
 {
   if (EventNumber != m_wdt.second) 
   {
