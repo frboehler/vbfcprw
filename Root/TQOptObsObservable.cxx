@@ -15,7 +15,7 @@ bool TQOptObsObservable::init(TString variable, double dtilde)
 {
   m_ooE = new OptObsEventStore();
   m_ooE->initPDFSet(m_tags->getTagStringDefault("PDFset","CT10").Data(),0,91.2);
-  //m_var = variable;
+
   //m_dtilde = dtilde;
   return true;
 }
