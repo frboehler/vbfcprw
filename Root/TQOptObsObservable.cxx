@@ -3,7 +3,7 @@
 ClassImp(TQOptObsObservable)
 #include "QFramework/TQUtils.h"
 
-  //#define _DEBUG_
+//#define _DEBUG_
 #include "QFramework/TQLibrary.h"
 #include "TSystem.h"
 #include "TLorentzVector.h"
@@ -304,7 +304,7 @@ double TQOptObsObservable::getValue() const {
 
   double mH = h_m;
 
-  int eventNumber = m_EventNumber->EvalInstance();
+  ULong64_t eventNumber = m_EventNumber->EvalInstance();
 
   double x1,x2;
 
@@ -382,7 +382,7 @@ double TQOptObsObservable::getValue() const {
 
     if (m_tags->getTagBoolDefault("isDebugRun",false) && nG == 0 && jets.size() == 3)
     {
-      INFOclass("Event %i",eventNumber);
+      INFOclass("Event %lu",eventNumber);
       INFOclass("Incoming partons: (x1=%f, f1=%i; x2=%f, f2=%i",x1,flavourIn.at(0),x2,flavourIn.at(1));
       INFOclass("Pt of the hqq (0,1)-system: %f",(h+v0+v1).Pt());
       INFOclass("Pt of the hqq (0,2)-system: %f",(h+v0+v2).Pt());
