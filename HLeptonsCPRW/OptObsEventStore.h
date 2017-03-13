@@ -5,8 +5,8 @@
 
 class OptObsEventStore {
   private:
-    std::pair< std::pair<double,double> , int > m_wdt = std::make_pair(std::make_pair(-1234,-1234) , -1);
-    std::pair< std::pair<double,double> , int > m_oo = std::make_pair(std::make_pair(-1234,-1234) , -1);
+    std::pair< std::pair<double,double> , ULong64_t > m_wdt = std::make_pair(std::make_pair(-1234,-1234) , 0);
+    std::pair< std::pair<double,double> , ULong64_t > m_oo  = std::make_pair(std::make_pair(-1234,-1234) , 0);
     std::vector<double> getLHAPDF(double Q, double x);
     bool m_isInitialized = false;
   public:

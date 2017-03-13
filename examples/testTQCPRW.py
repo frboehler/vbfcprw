@@ -1,6 +1,8 @@
 #! /bin/env python2
 
 def main():
+    fileIn = '/storage/groups/atl/reweight_samples/VBF.root'
+
     from HLeptonsCPRW import TQOptObsObservable
     import QFramework
     dtPos = 0.3
@@ -29,15 +31,22 @@ def main():
     QFramework.TQObservable.addObservable(rwNeg,"weightDTildeNeg");
     QFramework.TQObservable.printObservables();
     samples = QFramework.TQSampleFolder.newSampleFolder('samples')
+    samples.setTagBool( "usemcweights", True)
+
     sample = QFramework.TQSample('testSample')
-    fileIn = '/storage/groups/atl/reweight_samples/VBF.root'
     sample.setTagString('.xsp.filepath',fileIn)
     sample.setTagString('.xsp.treename','NOMINAL')
-    samples.setTagBool( "usemcweights", True)
+
+    sample2 = QFramework.TQSample('testSample2')
+    sample2.setTagString('.xsp.filepath',fileIn)
+    sample2.setTagString('.xsp.treename','NOMINAL')
+
     samples.addObject(sample)
+    samples.addObject(sample2)
     QFramework.TQTreeObservable.allowErrorMessages(True)
     init = QFramework.TQSampleInitializer()
     sample.visitMe(init)
+    sample2.visitMe(init)
     cut = QFramework.TQCut('base')
     cut.setCutExpression('1')
     #cut.setCutExpression('event_number == 356242')

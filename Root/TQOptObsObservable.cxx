@@ -141,7 +141,7 @@ bool TQOptObsObservable::initializeSelf(){
 
 bool TQOptObsObservable::finalizeSelf(){
   DEBUGclass("Finalising...");
-  delete m_ooE;
+
   delete m_EventNumber;
 
   if(m_tags->getTagStringDefault("channel","leplep").Contains("lephad")){
@@ -200,6 +200,7 @@ bool TQOptObsObservable::finalizeSelf(){
 //______________________________________________________________________________________________
 
 TQOptObsObservable::~TQOptObsObservable(){
+  delete m_ooE;
 }
 
 
@@ -213,6 +214,7 @@ double TQOptObsObservable::getValue() const {
   double ecm = m_tags->getTagDoubleDefault("ecm",13000);                           //proton-proton center-of mass energy in GeV
   double Q =  m_tags->getTagDoubleDefault("scale_Q",125); // scale used for lhapdf
 
+  ULong64_t eventNumber = m_EventNumber->EvalInstance();
 
   //new for leplep
 
@@ -269,32 +271,35 @@ double TQOptObsObservable::getValue() const {
   }
 
   else if(m_tags->getTagStringDefault("channel","leplep").Contains("leplep")){
-      jet_2_pt  = m_jets_pt_vec->EvalInstance(0)*0.001;
-      jet_2_eta = m_jets_eta_vec->EvalInstance(0);
-      jet_2_phi = m_jets_phi_vec->EvalInstance(0);
-      jet_2_m   = m_jets_m_vec->EvalInstance(0)*0.001;
+    m_jets_pt_vec->GetNdata();
+    m_jets_eta_vec->GetNdata();
+    m_jets_phi_vec->GetNdata();
+    m_jets_m_vec->GetNdata();
+    m_h_pt_vec->GetNdata();
+    m_h_eta_vec->GetNdata();
+    m_h_phi_vec->GetNdata();
+    m_h_m_vec->GetNdata();
 
-      jet_3_pt  = m_jets_pt_vec->EvalInstance(1)*0.001;
-      jet_3_eta = m_jets_eta_vec->EvalInstance(1);
-      jet_3_phi = m_jets_phi_vec->EvalInstance(1);
-      jet_3_m   = m_jets_m_vec->EvalInstance(1)*0.001;
+    jet_2_pt  = m_jets_pt_vec->EvalInstance(0)*0.001;
+    jet_2_eta = m_jets_eta_vec->EvalInstance(0);
+    jet_2_phi = m_jets_phi_vec->EvalInstance(0);
+    jet_2_m   = m_jets_m_vec->EvalInstance(0)*0.001;
+    
+    jet_3_pt  = m_jets_pt_vec->EvalInstance(1)*0.001;
+    jet_3_eta = m_jets_eta_vec->EvalInstance(1);
+    jet_3_phi = m_jets_phi_vec->EvalInstance(1);
+    jet_3_m   = m_jets_m_vec->EvalInstance(1)*0.001;
+    
+    jet_4_pt  = m_jets_pt_vec->EvalInstance(2)*0.001;
+    jet_4_eta = m_jets_eta_vec->EvalInstance(2);
+    jet_4_phi = m_jets_phi_vec->EvalInstance(2);
+    jet_4_m   = m_jets_m_vec->EvalInstance(2)*0.001;
+    
+    h_pt  = m_h_pt_vec->EvalInstance(0)*0.001;
+    h_eta = m_h_eta_vec->EvalInstance(0);
+    h_phi = m_h_phi_vec->EvalInstance(0);
+    h_m   = m_h_m_vec->EvalInstance(0)*0.001;
 
-      jet_4_pt  = m_jets_pt_vec->EvalInstance(2)*0.001;
-      jet_4_eta = m_jets_eta_vec->EvalInstance(2);
-      jet_4_phi = m_jets_phi_vec->EvalInstance(2);
-      jet_4_m   = m_jets_m_vec->EvalInstance(2)*0.001;
-
-      h_pt  = m_h_pt_vec->EvalInstance(0)*0.001;
-      h_eta = m_h_eta_vec->EvalInstance(0);
-      h_phi = m_h_phi_vec->EvalInstance(0);
-      h_m   = m_h_m_vec->EvalInstance(0)*0.001;
-
-      //std::cout << "dilep mmc pt size: " << m_h_pt_vec->GetNdata() << std::endl;
-      //std::cout<< "jet size: " << m_jets_pt_vec->GetNdata() << std::endl;
-
-      //std::cout<< "jet size: " << m_jets_pt_vec->GetNdata() << std::endl;
-      //std::cout << "jet pt test: " << jet_2_pt << "," << jet_3_pt << "," << jet_4_pt << std::endl;
-      //std::cout<< "jet pt test 100: " << m_jets_pt_vec->EvalInstance(100) << std::endl;
   }
 
   if (jet_2_pt<=0 || jet_3_pt<=0 || h_pt<=0){
@@ -303,8 +308,6 @@ double TQOptObsObservable::getValue() const {
   }
 
   double mH = h_m;
-
-  ULong64_t eventNumber = m_EventNumber->EvalInstance();
 
   double x1,x2;
 
@@ -416,13 +419,8 @@ double TQOptObsObservable::getValue() const {
 
     TLorentzVector fO;
 
-    //if (jets.size() == 3)
-    //  fO = (h + v0 + v1 + v2);
-    //else
-    //  fO = (h + v0 + v1);
-
     fO = (h + v0 + v1);
-    
+
     x1 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity());
     x2 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity()*-1);
 
@@ -498,13 +496,14 @@ double TQOptObsObservable::getValue() const {
   }
   if (m_var.Contains("OptimalObservable"))
   {
-    //if(pjets[0][0]>0 && pjets[1][0]>0 && phiggs[0]>0){ // make sure all objects are there
-      DEBUGclass("Inputs for OO calculation: ecm=%f, mH=%f, x1=%f, x2=%f, Q=%f",ecm,mH,x1,x2,Q);
-      DEBUGclass("Inputs for OO calculation (j1): %f, %f, %f, %f",pjets[0][0],pjets[0][1],pjets[0][2],pjets[0][3]);
-      DEBUGclass("Inputs for OO calculation (j2): %f, %f, %f, %f",pjets[1][0],pjets[1][1],pjets[1][2],pjets[1][3]);
-      DEBUGclass("Inputs for OO calculation (H): %f, %f, %f, %f",phiggs[0],phiggs[1],phiggs[2],phiggs[3]);
-      retval = m_ooE->getOptObs(entry, eventNumber, ecm, mH ,x1,x2,Q,pjets[0],pjets[1],phiggs);
-      //}
+    DEBUGclass("Inputs for OO calculation: ecm=%f, mH=%f, x1=%f, x2=%f, Q=%f",ecm,mH,x1,x2,Q);
+    DEBUGclass("Inputs for OO calculation (j1): %f, %f, %f, %f",pjets[0][0],pjets[0][1],pjets[0][2],pjets[0][3]);
+    DEBUGclass("Inputs for OO calculation (j2): %f, %f, %f, %f",pjets[1][0],pjets[1][1],pjets[1][2],pjets[1][3]);
+    DEBUGclass("Inputs for OO calculation (H): %f, %f, %f, %f",phiggs[0],phiggs[1],phiggs[2],phiggs[3]);
+    if (pjets[0][0] > 0. && pjets[1][0] > 0. && phiggs[0] > 0.)
+      {
+	retval = m_ooE->getOptObs(entry, eventNumber, ecm, mH ,x1,x2,Q,pjets[0],pjets[1],phiggs);
+      }
   }
   else if (m_var.Contains("WeightDTilde"))
   {
@@ -538,7 +537,7 @@ double TQOptObsObservable::getValue() const {
         npafin,flavourIn[0],flavourIn[1],flavourOut[0],flavourOut[1],flavourOut[2],
         x1,x2,pjets[0],pjets[1],pjets[2],phiggs);
   }
-  DEBUGclass("Returning %f for variable %s in Event %i",retval,m_var.Data(),eventNumber);
+  DEBUGclass("Returning %f for variable %s in Event %lu",retval,m_var.Data(),eventNumber);
   return retval;
 }
 
