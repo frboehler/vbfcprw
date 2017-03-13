@@ -15,8 +15,8 @@ bool TQOptObsObservable::init(TString variable, double dtilde)
 {
   m_ooE = new OptObsEventStore();
   m_ooE->initPDFSet(m_tags->getTagStringDefault("PDFset","CT10").Data(),0,91.2);
-
-  //m_dtilde = dtilde;
+  m_var = variable;
+  m_dtilde = dtilde;
   return true;
 }
 TQOptObsObservable::TQOptObsObservable(TString variable, TQTaggable *tags, double dtilde) :
@@ -24,18 +24,14 @@ TQTreeObservable()
 {
   // default constructor
   m_tags = tags;
-  m_var = variable;
-  m_dtilde = dtilde;
-  //this->init(variable,dtilde);
+  this->init(variable,dtilde);
 }
 TQOptObsObservable::TQOptObsObservable(TString variable, double dtilde) :
 TQTreeObservable()
 {
   // default constructor
   m_tags = new TQTaggable();
-  m_var = variable;
-  m_dtilde = dtilde;
-  //this->init(variable,dtilde);
+  this->init(variable,dtilde);
 }
 
 TQOptObsObservable::TQOptObsObservable(TString variable, TString tags, double dtilde) :
@@ -44,9 +40,7 @@ TQTreeObservable()
   // default constructor
   m_tags = new TQTaggable();
   m_tags->importTags(tags);
-  m_var = variable;
-  m_dtilde = dtilde;
-  //this->init(variable,dtilde);
+  this->init(variable,dtilde);
 }
 
 
@@ -55,8 +49,6 @@ TQTreeObservable()
 bool TQOptObsObservable::initializeSelf(){
   // initialize the formula of this observable
   DEBUGclass("initializing ...");
-
-  init(m_var,m_dtilde);
 
   m_EventNumber = new TTreeFormula("event_number","event_number",fTree);
 
@@ -129,7 +121,6 @@ bool TQOptObsObservable::initializeSelf(){
     else {
       INFOclass("No valid channel found!!");
     }
-
   }
 
   DEBUGclass("initialized!");
@@ -168,17 +159,38 @@ bool TQOptObsObservable::finalizeSelf(){
   }
 
   else if(m_tags->getTagStringDefault("channel","leplep").Contains("leplep")){
+    if(m_tags->getTagBoolDefault("isReco",false) == false){
+      delete m_jet_2_pt;
+      delete m_jet_2_eta;
+      delete m_jet_2_phi;
+      delete m_jet_2_m;
 
-    delete m_jets_pt_vec;
-    delete m_jets_eta_vec;
-    delete m_jets_phi_vec;
-    delete m_jets_m_vec;
+      delete m_jet_3_pt;
+      delete m_jet_3_eta;
+      delete m_jet_3_phi;
+      delete m_jet_3_m;
 
-    delete m_h_pt_vec;
-    delete m_h_eta_vec;
-    delete m_h_phi_vec;
-    delete m_h_m_vec;
+      delete m_jet_4_pt;
+      delete m_jet_4_eta;
+      delete m_jet_4_phi;
+      delete m_jet_4_m;
 
+      delete m_h_pt;
+      delete m_h_eta;
+      delete m_h_phi;
+      delete m_h_m;
+    }
+    else {
+      delete m_jets_pt_vec;
+      delete m_jets_eta_vec;
+      delete m_jets_phi_vec;
+      delete m_jets_m_vec;
+      
+      delete m_h_pt_vec;
+      delete m_h_eta_vec;
+      delete m_h_phi_vec;
+      delete m_h_m_vec;
+    }
   }
 
   if (m_tags->getTagBoolDefault("isReco",false) == false)
@@ -213,20 +225,6 @@ double TQOptObsObservable::getValue() const {
   //
   double ecm = m_tags->getTagDoubleDefault("ecm",13000);                           //proton-proton center-of mass energy in GeV
   double Q =  m_tags->getTagDoubleDefault("scale_Q",125); // scale used for lhapdf
-
-  ULong64_t eventNumber = m_EventNumber->EvalInstance();
-
-  //new for leplep
-
-  m_jets_pt_vec->GetNdata();
-  m_jets_eta_vec->GetNdata();
-  m_jets_phi_vec->GetNdata();
-  m_jets_m_vec->GetNdata();
-  m_h_pt_vec->GetNdata();
-  m_h_eta_vec->GetNdata();
-  m_h_phi_vec->GetNdata();
-  m_h_m_vec->GetNdata();
-
 
   double jet_2_pt  =-1;
   double jet_2_eta =-1;
@@ -271,6 +269,7 @@ double TQOptObsObservable::getValue() const {
   }
 
   else if(m_tags->getTagStringDefault("channel","leplep").Contains("leplep")){
+
     m_jets_pt_vec->GetNdata();
     m_jets_eta_vec->GetNdata();
     m_jets_phi_vec->GetNdata();
@@ -302,12 +301,9 @@ double TQOptObsObservable::getValue() const {
 
   }
 
-  if (jet_2_pt<=0 || jet_3_pt<=0 || h_pt<=0){
-    //std::cout << "There seem to be some obj missing! return -9999." << std::endl;
-    return -9999.;
-  }
-
   double mH = h_m;
+
+  ULong64_t eventNumber = m_EventNumber->EvalInstance();
 
   double x1,x2;
 
@@ -321,15 +317,6 @@ double TQOptObsObservable::getValue() const {
   std::vector<int> flavourIn, flavourOut;
   std::vector< std::pair<TLorentzVector,int> >jets;
 
-  //h.SetPtEtaPhiM(m_h_pt->EvalInstance(),m_h_eta->EvalInstance(),m_h_phi->EvalInstance(),m_h_m->EvalInstance());
-  //
-  //v0.SetPtEtaPhiM(m_jet_2_pt->EvalInstance(),m_jet_2_eta->EvalInstance(),m_jet_2_phi->EvalInstance(),m_jet_2_m->EvalInstance());
-  //jetList.push_back(std::make_pair(0,v0.Eta()));
-  //
-  //v1.SetPtEtaPhiM(m_jet_3_pt->EvalInstance(),m_jet_3_eta->EvalInstance(),m_jet_3_phi->EvalInstance(),m_jet_3_m->EvalInstance());
-  //jetList.push_back(std::make_pair(1,v1.Eta()));
-  //
-  //v2.SetPtEtaPhiM(m_jet_4_pt->EvalInstance(),m_jet_4_eta->EvalInstance(),m_jet_4_phi->EvalInstance(),m_jet_4_m->EvalInstance());
   h.SetPtEtaPhiM(h_pt,h_eta,h_phi,h_m); 
 
   v0.SetPtEtaPhiM(jet_2_pt,jet_2_eta,jet_2_phi,jet_2_m);
@@ -340,7 +327,6 @@ double TQOptObsObservable::getValue() const {
 
   v2.SetPtEtaPhiM(jet_4_pt,jet_4_eta,jet_4_phi,jet_4_m); 
 
-  //if (m_jet_4_pt->EvalInstance() > ptCutoff)
   if (jet_4_pt > ptCutoff)
   {
     jetList.push_back(std::make_pair(2,v2.Eta()));
@@ -423,14 +409,6 @@ double TQOptObsObservable::getValue() const {
 
     x1 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity());
     x2 = ((fO).M()/ecm)*TMath::Exp(fO.Rapidity()*-1);
-
-    //std::cout << "h pt eta phi: " << h.Pt() << "/" << h.Eta() << "/" << h.Phi() << std::endl;
-    //std::cout << "v0 pt eta phi: " << v0.Pt() << "/" << v0.Eta() << "/" << v0.Phi() << std::endl;
-    //std::cout << "v1 pt eta phi: " << v1.Pt() << "/" << v1.Eta() << "/" << v1.Phi() << std::endl;
-    //std::cout << "->f0 pt eta phi: " << fO.Pt() << "/" << fO.Eta() << "/" << fO.Phi() << std::endl;
-    //
-    //std::cout << "f0 m: " << fO.M() << " fo rap: " << fO.Rapidity() << std::endl;
-    //std::cout << " -> x1,x2: " << x1 << "," << x2 << std::endl;
 
     jets.push_back(std::make_pair(v0, 0));
     jets.push_back(std::make_pair(v1, 0));
@@ -587,32 +565,32 @@ TObjArray* TQOptObsObservable::getBranchNames() const {
   else
   {
     if(m_tags->getTagStringDefault("channel","leplep").Contains("lephad")){
-    retval->Add(new TObjString("jet_0_pt"));
-    retval->Add(new TObjString("jet_0_eta"));
-    retval->Add(new TObjString("jet_0_phi"));
-    retval->Add(new TObjString("jet_0_m"));
-
-    retval->Add(new TObjString("jet_1_pt"));
-    retval->Add(new TObjString("jet_1_eta"));
-    retval->Add(new TObjString("jet_1_phi"));
-    retval->Add(new TObjString("jet_1_m"));
-
-    retval->Add(new TObjString("jet_2_pt"));
-    retval->Add(new TObjString("jet_2_eta"));
-    retval->Add(new TObjString("jet_2_phi"));
-    retval->Add(new TObjString("jet_2_m"));
-
-    retval->Add(new TObjString("lephad_mmc_maxw_pt"));
-    retval->Add(new TObjString("lephad_mmc_maxw_eta"));
-    retval->Add(new TObjString("lephad_mmc_maxw_phi"));
-    retval->Add(new TObjString("lephad_mmc_maxw_m"));
+      retval->Add(new TObjString("jet_0_pt"));
+      retval->Add(new TObjString("jet_0_eta"));
+      retval->Add(new TObjString("jet_0_phi"));
+      retval->Add(new TObjString("jet_0_m"));
+      
+      retval->Add(new TObjString("jet_1_pt"));
+      retval->Add(new TObjString("jet_1_eta"));
+      retval->Add(new TObjString("jet_1_phi"));
+      retval->Add(new TObjString("jet_1_m"));
+      
+      retval->Add(new TObjString("jet_2_pt"));
+      retval->Add(new TObjString("jet_2_eta"));
+      retval->Add(new TObjString("jet_2_phi"));
+      retval->Add(new TObjString("jet_2_m"));
+      
+      retval->Add(new TObjString("lephad_mmc_maxw_pt"));
+      retval->Add(new TObjString("lephad_mmc_maxw_eta"));
+      retval->Add(new TObjString("lephad_mmc_maxw_phi"));
+      retval->Add(new TObjString("lephad_mmc_maxw_m"));
     }
     else if(m_tags->getTagStringDefault("channel","leplep").Contains("leplep")){
       retval->Add(new TObjString("jets_pt"));
       retval->Add(new TObjString("jets_eta"));
       retval->Add(new TObjString("jets_phi"));
       retval->Add(new TObjString("jets_m"));
-
+      
       retval->Add(new TObjString("dilep_mmc_maxw_pt"));
       retval->Add(new TObjString("dilep_mmc_maxw_eta"));
       retval->Add(new TObjString("dilep_mmc_maxw_phi"));
