@@ -7,8 +7,10 @@ ClassImp(TQOptObsObservable)
 #include "QFramework/TQLibrary.h"
 #include "TSystem.h"
 #include "TLorentzVector.h"
+#ifdef ROOTCORE_PACKAGE_Htt2016.leplep
 #include "Htt2016.leplep/EventSelection_leplep_fake.h"
 #include "Htt2016.leplep/EventSelection_leplep_default.h"
+#endif
 
 //______________________________________________________________________________________________
 
@@ -110,6 +112,7 @@ bool TQOptObsObservable::initializeSelf(){
       m_h_phi = new TTreeFormula("lephad_mmc_maxw_phi","lephad_mmc_maxw_phi",fTree);
       m_h_m = new TTreeFormula("lephad_mmc_maxw_m","lephad_mmc_maxw_m",fTree);
     }
+#ifdef ROOTCORE_PACKAGE_Htt2016.leplep
     else if (m_tags->getTagStringDefault("channel","leplep").Contains("leplep")){
 
       if(m_tags->getTagBoolDefault("isFake","false")==true){
@@ -130,6 +133,7 @@ bool TQOptObsObservable::initializeSelf(){
       m_h_m_vec   = new TTreeFormula("dilep_mmc_maxw_m","dilep_mmc_maxw_m",fTree);
 
     }
+#endif
     else {
       INFOclass("No valid channel found!!");
     }
@@ -183,6 +187,7 @@ bool TQOptObsObservable::finalizeSelf(){
     delete m_h_m;
   }
 
+#ifdef ROOTCORE_PACKAGE_Htt2016.leplep
   else if(m_tags->getTagStringDefault("channel","leplep").Contains("leplep")){
     if(m_tags->getTagBoolDefault("isReco",false) == false){
 
@@ -225,6 +230,7 @@ bool TQOptObsObservable::finalizeSelf(){
       delete m_h_m_vec;
     }
   }
+#endif
 
   return true;
 }
@@ -319,7 +325,7 @@ double TQOptObsObservable::getValue() const {
       int idx1 = -1;
       int idx2 = -1;
       int dilepidx = -1;
-
+#ifdef ROOTCORE_PACKAGE_Htt2016.leplep
       if(m_tags->getTagBoolDefault("isFake","false")==true){
         idx0=EVS_fake->getJetIdx(0);
         idx1=EVS_fake->getJetIdx(1);
@@ -332,7 +338,7 @@ double TQOptObsObservable::getValue() const {
         idx2=EVS_def->getJetIdx(2);
 	dilepidx=EVS_def->getDilepIdx(0);
       }
-
+#endif
       if(idx0<0 || idx1<0 || idx2<0 || dilepidx<0){
 	return -999999.;
       }
