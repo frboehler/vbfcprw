@@ -21,7 +21,6 @@ bool TQOptObsObservable::init(TString variable, double dtilde)
   m_var = variable;
   m_dtilde = dtilde;
 
-  //std::cout << "variable: " << variable  << std::endl;
   return true;
 }
 TQOptObsObservable::TQOptObsObservable(TString variable, TQTaggable *tags, double dtilde) :
@@ -149,7 +148,6 @@ bool TQOptObsObservable::initializeSelf(){
 bool TQOptObsObservable::finalizeSelf(){
   DEBUGclass("Finalising...");
 
-  // std::cout << "start in delete" << std::endl;
 
   delete m_EventNumber;
 
@@ -248,7 +246,6 @@ double TQOptObsObservable::getValue() const {
   // retrieve the value of this tree observable
   // return NaN in case of failure
 
-  //std::cout << "In get val for "  << m_var << " reco: " << m_tags->getTagBoolDefault("isReco","false") << " channel:" << m_tags->getTagStringDefault("channel","leplep") << std::endl; 
   double ecm = m_tags->getTagDoubleDefault("ecm",13000);                           //proton-proton center-of mass energy in GeV
   double Q =  m_tags->getTagDoubleDefault("scale_Q",125); // scale used for lhapdf
 
