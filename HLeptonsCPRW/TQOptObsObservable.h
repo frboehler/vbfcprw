@@ -9,6 +9,10 @@
 #include "HLeptonsCPRW/OptObsEventStore.h"
 #include "QFramework/TQTreeObservable.h"
 #include "QFramework/TQTaggable.h"
+#ifdef ROOTCORE_PACKAGE_Htt2016.leplep
+#include "Htt2016.leplep/EventSelection_leplep_fake.h"
+#include "Htt2016.leplep/EventSelection_leplep_default.h"
+#endif
 
 class TQOptObsObservable : public TQTreeObservable {
 
@@ -44,6 +48,21 @@ protected:
   TTreeFormula *m_h_eta;
   TTreeFormula *m_h_phi;
   TTreeFormula *m_h_m;
+
+  TTreeFormula *m_jets_pt_vec;
+  TTreeFormula *m_jets_eta_vec;
+  TTreeFormula *m_jets_phi_vec;
+  TTreeFormula *m_jets_m_vec;
+  TTreeFormula *m_h_pt_vec;
+  TTreeFormula *m_h_eta_vec;
+  TTreeFormula *m_h_phi_vec;
+  TTreeFormula *m_h_m_vec;
+
+#ifdef ROOTCORE_PACKAGE_Htt2016.leplep
+  EventSelection_leplep_fake * EVS_fake;
+  EventSelection_leplep_default * EVS_def;
+#endif
+
   OptObsEventStore *m_ooE = 0;
 
 struct sortClass {
