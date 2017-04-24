@@ -7,9 +7,9 @@ ClassImp(TQOptObsObservable)
 #include "QFramework/TQLibrary.h"
 #include "TSystem.h"
 #include "TLorentzVector.h"
-#ifdef ROOTCORE_PACKAGE_Htt2016.leplep
-#include "Htt2016.leplep/EventSelection_leplep_fake.h"
-#include "Htt2016.leplep/EventSelection_leplep_default.h"
+#ifdef ROOTCORE_PACKAGE_Htt2016_leplep
+#include "Htt2016_leplep/EventSelection_leplep_fake.h"
+#include "Htt2016_leplep/EventSelection_leplep_default.h"
 #endif
 
 //______________________________________________________________________________________________
@@ -111,7 +111,7 @@ bool TQOptObsObservable::initializeSelf(){
       m_h_phi = new TTreeFormula("lephad_mmc_maxw_phi","lephad_mmc_maxw_phi",fTree);
       m_h_m = new TTreeFormula("lephad_mmc_maxw_m","lephad_mmc_maxw_m",fTree);
     }
-#ifdef ROOTCORE_PACKAGE_Htt2016.leplep
+#ifdef ROOTCORE_PACKAGE_Htt2016_leplep
     else if (m_tags->getTagStringDefault("channel","leplep").Contains("leplep")){
 
       if(m_tags->getTagBoolDefault("isFake","false")==true){
@@ -185,7 +185,7 @@ bool TQOptObsObservable::finalizeSelf(){
     delete m_h_m;
   }
 
-#ifdef ROOTCORE_PACKAGE_Htt2016.leplep
+#ifdef ROOTCORE_PACKAGE_Htt2016_leplep
   else if(m_tags->getTagStringDefault("channel","leplep").Contains("leplep")){
     if(m_tags->getTagBoolDefault("isReco",false) == false){
 
@@ -322,7 +322,7 @@ double TQOptObsObservable::getValue() const {
       int idx1 = -1;
       int idx2 = -1;
       int dilepidx = -1;
-#ifdef ROOTCORE_PACKAGE_Htt2016.leplep
+#ifdef ROOTCORE_PACKAGE_Htt2016_leplep
       if(m_tags->getTagBoolDefault("isFake","false")==true){
         idx0=EVS_fake->getJetIdx(0);
         idx1=EVS_fake->getJetIdx(1);
