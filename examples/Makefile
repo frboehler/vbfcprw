@@ -11,9 +11,5 @@ bin/testCPRW: testCPRW.cxx
 	mkdir -p bin
 	$(LD) $(CXXFLAGS) $(shell rc get_cxxflags) $^ $(shell rc get_all_ldflags) -lweightandoptobs -lgfortran -o $@ 
 
-bin/testTQCPRW: testTQCPRW.cxx
-	mkdir -p bin
-	$(LD) $(CXXFLAGS) $(shell rc get_cxxflags) $^ $(shell rc get_all_ldflags) -lweightandoptobs -lgfortran -o $@ 
-
 clean: 
 	rm bin/*
