@@ -14,8 +14,6 @@ int main(int argc, char* argv[])
   int npafin = 3;                               //number of partons in final state  either  2 or 3
   double x1 = 0.072082;                              //Bjorken x of incoming partons, 1 in + z , 2 in -z direction
   double x2 = 0.123500;
-  double pdf1[] = {0,0.0391232,0.0541232,0.0845228,0.105186,0.129429,0.86471,0.345418,0.561297,0.0845228,0.0541232,0.0391232,0.};  //from -6 to 6: pdfs for 1st parton
-  double pdf2[] = {0,0.0143834,0.0205766,0.0334123,0.0462144,0.0601489,0.345621,0.246406,0.468401,0.0334123,0.0205766,0.0143834,0.};  //from -6 to 6: pdfs for 2nd parton
   double Q = 84000;
   int flavour1In = -2;                           //flavour of incoming/outgoing parton n
   int flavour2In = 2;                           //flavour assignment: t = 6  b = 5 c = 4, s = 3, u = 2, d = 1   
@@ -28,8 +26,13 @@ int main(int argc, char* argv[])
   int iterations = 1;
   int eventNumber = 1234;
 
-  std::pair<double,double> oo, weights;
+  // Only used when ran without the Event-store:
+  double pdf1[] = {0,0.0391232,0.0541232,0.0845228,0.105186,0.129429,0.86471,0.345418,0.561297,0.0845228,0.0541232,0.0391232,0.};  //from -6 to 6: pdfs for 1st parton
+  double pdf2[] = {0,0.0143834,0.0205766,0.0334123,0.0462144,0.0601489,0.345621,0.246406,0.468401,0.0334123,0.0205766,0.0143834,0.};  //from -6 to 6: pdfs for 2nd parton
+
   OptObsEventStore ooES;
+
+  std::pair<double,double> oo, weights;
   for(int i=0; i<argc; ++i)
   {   
     if (TString(argv[i]).Contains("--useEventStore")) useEventStore = true;
