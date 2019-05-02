@@ -90,3 +90,16 @@ The weight is calculated under the assumption dtilde=detilde_b and all other ano
     - phiggs(0:3): E,px,py,pz of Higgs boson
     
 returning a pair (oo1,oo2) which are the optimal observables of 1st and 2nd order.
+
+
+# Install standalone
+```
+mkdir -p workarea/source
+mkdir -p workarea/build
+cd workarea/source
+git clone -b cmake https://:@gitlab.cern.ch:8443/Htt2016.developers/HLeptonsCPRW.git
+cd ../build
+acmSetup AthAnalysis,21.2.46
+acm add_pkg HLeptonsCPRW
+make
+```
