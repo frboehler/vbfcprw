@@ -113,3 +113,10 @@ testCPRW
 # for the python version
 testCPRW.py
 ```
+
+# On every login
+```
+cd workarea
+acmSetup AthAnalysis,21.2.46
+source build/x86*/setup.sh
+```
