@@ -97,9 +97,19 @@ returning a pair (oo1,oo2) which are the optimal observables of 1st and 2nd orde
 mkdir -p workarea/source
 mkdir -p workarea/build
 cd workarea/source
+# the gitlab link below is for Kerberos authentication. adjust if you use SSH keys.
 git clone -b cmake https://:@gitlab.cern.ch:8443/Htt2016.developers/HLeptonsCPRW.git
 cd ../build
+setupATLAS
 acmSetup AthAnalysis,21.2.46
 acm add_pkg HLeptonsCPRW
 make
+```
+
+# Test that it works
+```
+# for the C++ version
+testCPRW
+# for the python version
+testCPRW.py
 ```
