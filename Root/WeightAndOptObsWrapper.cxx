@@ -1,4 +1,5 @@
 #include "HLeptonsCPRW/WeightAndOptObsWrapper.h"
+#include<iostream>
 
 extern "C"
 {

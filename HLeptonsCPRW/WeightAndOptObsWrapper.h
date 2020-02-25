@@ -9,7 +9,6 @@
 #ifndef __HLEPTONSCPRW__
 #define __HLEPTONSCPRW__
 #include<utility>
-#include<iostream>
 
 namespace HLeptonsCPRW {
   double getReweight(double ecm, double mH, int ipara, double rsmin, 

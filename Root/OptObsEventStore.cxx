@@ -41,7 +41,7 @@ std::vector<double> OptObsEventStore::getLHAPDF(double Q, double x){
 }
 
 
-double OptObsEventStore::getOptObs(int entry, ULong64_t EventNumber, double ecm,double mH,double x1,double x2,double Q, double* pjet1, double* pjet2, double* phiggs)
+double OptObsEventStore::getOptObs(int entry, unsigned long long int EventNumber, double ecm,double mH,double x1,double x2,double Q, double* pjet1, double* pjet2, double* phiggs)
 {
   double a_pdf1[13];
   double a_pdf2[13];
@@ -71,7 +71,7 @@ double OptObsEventStore::getOptObs(int entry, ULong64_t EventNumber, double ecm,
 }
 
 
-double OptObsEventStore::getWeightsDtilde(int entry, ULong64_t EventNumber, double ecm, double mH,int npafin, int ifl1in,int ifl2in,int ifl1out, int ifl2out, int ifl3out, double x1, double x2, double* pjet1, double *pjet2, double *pjet3, double *phiggs)
+double OptObsEventStore::getWeightsDtilde(int entry, unsigned long long int EventNumber, double ecm, double mH,int npafin, int ifl1in,int ifl2in,int ifl1out, int ifl2out, int ifl3out, double x1, double x2, double* pjet1, double *pjet2, double *pjet3, double *phiggs)
 {
   if (EventNumber != m_wdt.second) 
   {
