@@ -21,3 +21,6 @@ setup(
     author_email="hohn.david@gmail.com",
     url="https://gitlab.cern.ch/FreiburgSchumacher/vbfcp/HLeptonsCPRW"
 )
+
+# manually this works too
+# python -m numpy.f2py -c Root/*.f -m hawkroutines
