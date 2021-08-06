@@ -15,7 +15,7 @@ setup(
     name='vbfcprw',
     version='0.1',
     ext_modules=[ext1],
-    py_modules=['vbfcprw'],
+    packages=['vbfcprw'],
     install_requires=["numpy", "pylorentz", "parton"],
     author="David Hohn",
     author_email="hohn.david@gmail.com",
@@ -24,3 +24,7 @@ setup(
 
 # manually this works too
 # python -m numpy.f2py -c Root/*.f -m hawkroutines
+# howto
+# python setup.py build
+# python setup.py bdist_wheel
+# python setup.py install
