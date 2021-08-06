@@ -56,6 +56,7 @@ C input variables
 C output variables
       integer ierr
       real*8 wedtlin,wedtquad
+Cf2py intent(out) ierr, wedtlin, wedtquad
 C some other variables for internal use
       integer ipara,i1,i2,i,j,k,l,idebug
       real*8 m2sm,m2full,m2cpo
@@ -724,6 +725,7 @@ C input variables
 C output variables
       integer ierr
       real*8 weight
+Cf2py intent(out) ierr, weight
 C some other variables for internal use
       integer ipara,i1,i2,i,j,k,l,idebug
       real*8 m2sm,m2full
@@ -1244,9 +1246,10 @@ C input variables
       real*8 ecms,mhiggs,x1,x2,pdf1(-6:6),pdf2(-6:6)
       real*8 pjet1(0:3),pjet2(0:3)
       real*8 phiggs(0:3)
-C input and output variables
+C output variables
       real*8 oo1,oo2
       integer ierr
+Cf2py intent(out) oo1, oo2, ierr
 C loop indices
       integer i1,i2,i,j
 C matrix elements 
