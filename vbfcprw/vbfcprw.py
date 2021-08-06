@@ -7,6 +7,7 @@ ecm = 13e3
 scale_Q = 125
 pdfdir = "."
 
+# TODO try this and print error when not available
 pdf = parton.mkPDF('CT10', 0, pdfdir=pdfdir)
 
 
