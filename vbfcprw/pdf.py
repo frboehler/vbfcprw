@@ -11,7 +11,6 @@ PDF = None
 
 def init_PDF():
     global PDF
-    print(pdfdir)
     PDF = _parton.mkPDF(name='CT10', member=0, pdfdir=pdfdir)
     return PDF
 
@@ -22,7 +21,7 @@ except ValueError as e:
     print(f"{e}")
     print("Install the CT10 PDF set in your working dir or specify in vbfcprw.pdf.pdfdir e.g. by:")
     print("wget -qO- http://lhapdfsets.web.cern.ch/lhapdfsets/current/CT10.tar.gz| tar xvz -C .")
-    print("and call vbfcprw.init_PDF() again yourself.")
+    print("and call vbfcprw.pdf.init_PDF() again yourself.")
 
 
 def getPDFs(x1, x2, Q):
