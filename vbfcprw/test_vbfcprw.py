@@ -1,4 +1,5 @@
-from vbfcprw import weightdtilde, WeightDtilde, OptimalObservable
+from vbfcprw import weightdtilde, reweight
+from vbfcprw import WeightDtilde, OptimalObservable
 import numpy
 import hawkroutines
 
@@ -23,13 +24,26 @@ eventNumber = 1234;
 pdf1 = numpy.array([0, 0.0391232, 0.0541232, 0.0845228, 0.105186,  0.129429,  0.86471,  0.345418, 0.561297, 0.0845228, 0.0541232, 0.0391232, 0])  #from -6 to 6: pdfs for 1st parton
 pdf2 = numpy.array([0, 0.0143834, 0.0205766, 0.0334123, 0.0462144, 0.0601489, 0.345621, 0.246406, 0.468401, 0.0334123, 0.0205766, 0.0143834, 0])  #from -6 to 6: pdfs for 2nd parton
 
+
 def test_hawkroutines():
-    wdt = hawkroutines.weightdtilde(ecm, mH, npafin, flavour1In, flavour2In, flavour1Out, flavour2Out, flavour3Out, x1, x2, pjet1, pjet2, pjet3, phiggs)
+    wdt = hawkroutines.weightdtilde(ecm, mH,
+                                    npafin,
+                                    flavour1In, flavour2In,
+                                    flavour1Out, flavour2Out, flavour3Out,
+                                    x1, x2,
+                                    pjet1, pjet2, pjet3, phiggs)
     assert wdt == (4.054467923118412, 32.29038008003971, 0)
 
+
 def test_weightdtilde():
-    wdt = weightdtilde(ecm, mH, npafin, flavour1In, flavour2In, flavour1Out, flavour2Out, flavour3Out, x1, x2, pjet1, pjet2, pjet3, phiggs)
+    wdt = weightdtilde(ecm, mH,
+                       npafin,
+                       flavour1In, flavour2In,
+                       flavour1Out, flavour2Out, flavour3Out,
+                       x1, x2,
+                       pjet1, pjet2, pjet3, phiggs)
     assert wdt == (4.054467923118412, 32.29038008003971, 0)
+
 
 def test_WeightDtilde():
     w = WeightDtilde([flavour1In, flavour2In],
@@ -38,8 +52,24 @@ def test_WeightDtilde():
                      phiggs)
     assert (w.wlin, w.wquad) == (4.3491101342370975, 33.902164911953044)
 
+
 def test_OptimalObservable():
-    oo = OptimalObservable([pjet1, pjet2],
-                           phiggs)
-    # print(oo.oo1, oo.oo2)
+    oo = OptimalObservable([pjet1, pjet2], phiggs)
     assert (oo.oo1, oo.oo2) == (2.49182772173305, 10.750636222825886)
+
+
+def test_reweight():
+    w = reweight(ecm, mH,
+                 1,                        # ipara: 1 for parametrisation in d and dt, else a1, a2, a3
+                 0.5, 0.5, 0.5, 0.5, 0.5,  # rsmin,din,dbin,dtin,dtbin 
+                 0.5,                      # lambdahvvin for formfactor if set to positive value 
+                 0.5, 0.5, 0.5,            # a1hwwin,a2hwwin,a3hwwin 
+                 0.5, 0.5, 0.5,            # a1haain,a2haain,a3haain 
+                 0.5, 0.5, 0.5,            # a1hazin,a2hazin,a3hazin 
+                 0.5, 0.5, 0.5,            # a1hzzin,a2hzzin,a3hzzin 
+                 npafin,
+                 flavour1In, flavour2In,
+                 flavour1Out, flavour2Out, flavour3Out,
+                 x1, x2,
+                 pjet1, pjet2, pjet3, phiggs)
+    assert w == (0.24999999978856272, 0)
