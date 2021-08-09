@@ -1,0 +1,21 @@
+OptimalObservable with print and
+getPDFs2 2.01 ms ± 195 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+getPDsF  2.38 ms ± 56 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+noPDF    560 µs ± 76.8 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+
+
+OptimalObservable only LV stuff
+with print
+188 µs ± 3.49 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+without print
+82.9 µs ± 10.2 µs per loop (mean ± std. dev. of 7 runs, 10000 loops each)
+
+standalone
+getPDFs   999 µs ± 122 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+getPDFs2 652 µs ± 10.1 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+
+OptimalObservable no print
+getPDFs2 997 µs ± 8.81 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+getPDFs  1.27 ms ± 12.4 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+noPDF    304 µs ± 27 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+
