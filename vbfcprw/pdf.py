@@ -1,5 +1,5 @@
-import parton
-import numpy
+import parton as _parton
+import numpy as _numpy
 
 pdfdir = "."
 
@@ -12,7 +12,7 @@ PDF = None
 def init_PDF():
     global PDF
     print(pdfdir)
-    PDF = parton.mkPDF(name='CT10', member=0, pdfdir=pdfdir)
+    PDF = _parton.mkPDF(name='CT10', member=0, pdfdir=pdfdir)
     return PDF
 
 
@@ -27,8 +27,8 @@ except ValueError as e:
 
 def getPDFs(x1, x2, Q):
     # pre- and appending 0s for top quarks
-    pdf1 = numpy.array([0]+[PDF.xfxQ(flavor, x1, Q) for flavor in range(-5, 6)]+[0])
-    pdf2 = numpy.array([0]+[PDF.xfxQ(flavor, x2, Q) for flavor in range(-5, 6)]+[0])
+    pdf1 = _numpy.array([0]+[PDF.xfxQ(flavor, x1, Q) for flavor in range(-5, 6)]+[0])
+    pdf2 = _numpy.array([0]+[PDF.xfxQ(flavor, x2, Q) for flavor in range(-5, 6)]+[0])
     pdfIn = [pdf1, pdf2]
     return pdfIn
 
@@ -37,14 +37,14 @@ def getPDFs2(x1, x2, Q):
     """
 this function is 30% faster than the one above
     """
-    x = numpy.array([x1, x2])
-    flavors = numpy.arange(-6, 7)
+    x = _numpy.array([x1, x2])
+    flavors = _numpy.arange(-6, 7)
 
     def protect_top(f):
         if abs(f) == 6:
-            return numpy.zeros(2).reshape(2, 1)
+            return _numpy.zeros(2).reshape(2, 1)
         else:
             return PDF.xfxQ(f, x, Q)
 
-    pdfOut = numpy.concatenate([protect_top(f) for f in flavors], axis=1)
+    pdfOut = _numpy.concatenate([protect_top(f) for f in flavors], axis=1)
     return pdfOut

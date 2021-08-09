@@ -1,11 +1,11 @@
 import hawkroutines
-import numpy
-from pylorentz import Momentum4
-from .pdf import getPDFs2
-from .constants import ecm, scale_Q
+import numpy as _numpy
+from pylorentz import Momentum4 as _Momentum4
+from .pdf import getPDFs2 as _getPDFs2
+import vbfcprw.constants as _constants
 
 
-def rapidity(lv):
+def _rapidity(lv):
     """
 calculate the rapidity of the Lorentz vector lv in z direction
 Args:
@@ -13,7 +13,7 @@ Args:
 Returns:
     float
 """
-    return 0.5*numpy.log((lv.e+lv.p_z)/(lv.e-lv.p_z))
+    return 0.5*_numpy.log((lv.e+lv.p_z)/(lv.e-lv.p_z))
 
 
 class WeightDtilde:
@@ -35,18 +35,18 @@ Returns:
         assert npafin == 2 or npafin == 3
         assert len(pjetOut) == npafin
 
-        lv = Momentum4(*phiggs)
+        lv = _Momentum4(*phiggs)
         mH = lv.m
         for pjet in pjetOut:
-            lv += Momentum4(*pjet)
-        x1 = lv.m/ecm*numpy.exp(rapidity(lv))
-        x2 = lv.m/ecm*numpy.exp(-1*rapidity(lv))
+            lv += _Momentum4(*pjet)
+        x1 = lv.m/_constants.ecm*_numpy.exp(_rapidity(lv))
+        x2 = lv.m/_constants.ecm*_numpy.exp(-1*_rapidity(lv))
 
         if npafin == 2:
             flavourOut += [0]
-            pjetOut += [numpy.zeros(4)]
+            pjetOut += [_numpy.zeros(4)]
 
-        self.wlin, self.wquad, ierr = weightdtilde(ecm, mH, npafin,
+        self.wlin, self.wquad, ierr = weightdtilde(_constants.ecm, mH, npafin,
                                                    *flavourIn,
                                                    *flavourOut,
                                                    x1, x2,
@@ -71,22 +71,22 @@ Args:
 """
         assert len(pjetOut) == 2
 
-        lv = Momentum4(*phiggs)
+        lv = _Momentum4(*phiggs)
         mH = lv.m
-        if scale_Q == "mH":
+        if _constants.scale_Q == "mH":
             Q = mH
         else:
-            Q = scale_Q
+            Q = _constants.scale_Q
         for pjet in pjetOut:
-            lv += Momentum4(*pjet)
-        x1 = lv.m/ecm*numpy.exp(rapidity(lv))
-        x2 = lv.m/ecm*numpy.exp(-1*rapidity(lv))
+            lv += _Momentum4(*pjet)
+        x1 = lv.m/_constants.ecm*_numpy.exp(_rapidity(lv))
+        x2 = lv.m/_constants.ecm*_numpy.exp(-1*_rapidity(lv))
 
-        # pdfIn (list[numpy.array[float]]): PDFs of incoming partons
-        pdfIn = getPDFs2(x1, x2, Q)
+        # pdfIn (list[_numpy.array[float]]): PDFs of incoming partons
+        pdfIn = _getPDFs2(x1, x2, Q)
 
         # self.oo1, self.oo2, ierr = 1,1,1
-        self.oo1, self.oo2, ierr = optobs(ecm, mH,
+        self.oo1, self.oo2, ierr = optobs(_constants.ecm, mH,
                                           x1, x2,
                                           *pdfIn,
                                           *pjetOut,
