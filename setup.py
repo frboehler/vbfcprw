@@ -2,6 +2,9 @@ import setuptools
 from numpy.distutils.core import setup, Extension
 
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 #---------------------------------------------------------------------------  
 ext1 = Extension(
     name='hawkroutines',
@@ -19,7 +22,10 @@ setup(
     install_requires=["numpy", "pylorentz", "parton"],
     author="David Hohn",
     author_email="hohn.david@gmail.com",
-    url="https://gitlab.cern.ch/FreiburgSchumacher/vbfcp/HLeptonsCPRW"
+    url="https://gitlab.cern.ch/FreiburgSchumacher/vbfcp/HLeptonsCPRW",
+    description="wrapper for simplified CP reweighting using HAWK generator",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
 )
 
 # manually this works too
