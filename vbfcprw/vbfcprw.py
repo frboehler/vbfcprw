@@ -124,14 +124,19 @@ Returns:
                                phiggs)
 
 
-def weightdtilde(ecm, mH, npafin, flavour1In, flavour2In, flavour1Out, flavour2Out, flavour3Out, x1, x2, pjet1, pjet2, pjet3, phiggs):
+def weightdtilde(ecm, mH,
+                 npafin,
+                 flavour1In, flavour2In,
+                 flavour1Out, flavour2Out, flavour3Out,
+                 x1, x2,
+                 pjet1, pjet2, pjet3, phiggs):
     """
-wrapper for the fortran function in weightandoptons.f
+wrapper for the weightdtilde subroutine in weightandoptobs.f
 
 Args:
     ecm (float): center of mass energy in GeV
     mH (float): Higgs boson mass in GeV
-    npafin (int): number of partons in final state, 2 or 3
+    npafin (int): number of partons in final state, 2 or 3 (if 3, the third is gluon)
     flavour1In (int): PDG ID of incoming parton 1, i.e. t = 6  b = 5 c = 4, s = 3, u = 2, d = 1
     flavour2In (int): PDG ID of incoming parton 2
     flavour1Out (int): PDG ID of outgoing parton 1
@@ -159,3 +164,48 @@ Returns:
 
 
 # TODO interface the reweight subroutines with doc
+def reweight(ecm, mH,
+             ipara,
+             rsmin, din, dbin, dtin, dtbin, lambdahvvin,
+             a1hwwin, a2hwwin, a3hwwin, a1haain, a2haain, a3haain, a1hazin, a2hazin, a3hazin, a1hzzin, a2hzzin, a3hzzin,
+             npafin,
+             flavour1In, flavour2In,
+             flavour1Out, flavour2Out, flavour3Out,
+             x1, x2,
+             pjet1, pjet2, pjet3, phiggs):
+    """
+wrapper for the reweight subroutine in weightandoptobs.f
+Args:
+    ecm (float): center of mass energy in GeV
+    mH (float): Higgs boson mass in GeV
+    ipara = 1 use parametrization in terms of d, db dt, dbt etc. else use parametrization in a1, a2, a3
+    anomalous couplings: rsmin,din,dbin,dtin,dtbin, 
+        a1hwwin,a2hwwin,a3hwwin,a1haain,a2haain,a3haain,
+        a1hazin,a2hazin,a3hazin,a1hzzin,a2hzzin,a3hzzin
+        lambdahvvin for formfactor if set to positive value
+        set lambdahvvin to negative values in order not to use formfactors
+    npafin (int): number of partons in final state, 2 or 3 (if 3, the third is gluon)
+    flavour1In (int): PDG ID of incoming parton 1, i.e. t = 6  b = 5 c = 4, s = 3, u = 2, d = 1
+    flavour2In (int): PDG ID of incoming parton 2
+    flavour1Out (int): PDG ID of outgoing parton 1
+    flavour2Out (int): PDG ID of outgoing parton 2
+    flavour3Out (int): PDG ID of outgoing parton 3
+    x1 (float): momentum fraction of incoming parton 1 ((finalstate_tlv.M()/ecm)*TMath::Exp(finalstate_tlv.Rapidity());)
+    x2 (float): momentum fraction of incoming parton 2 ((finalstate_tlv.M()/ecm)*TMath::Exp(-1*finalstate_tlv.Rapidity());)
+    pjet1 (numpy.array): 4-mom of outgoing parton 1 (E, Px, Py, Pz)
+    pjet2 (numpy.array): 4-mom of outgoing parton 2 (E, Px, Py, Pz)
+    pjet3 (numpy.array): 4-mom of outgoing parton 3 (E, Px, Py, Pz)
+    phiggs (numpy.array): 4-mom of Higgs boson (E, Px, Py, Pz)
+
+Returns:
+    tuple (weight, ierr) event weight to reweight from SM to chosen parameters, error code
+"""
+    return hawkroutines.reweight(ecm, mH,
+                                 ipara,
+                                 rsmin, din, dbin, dtin, dtbin, lambdahvvin,
+                                 a1hwwin, a2hwwin, a3hwwin, a1haain, a2haain, a3haain, a1hazin, a2hazin, a3hazin, a1hzzin, a2hzzin, a3hzzin,
+                                 npafin,
+                                 flavour1In, flavour2In,
+                                 flavour1Out, flavour2Out, flavour3Out,
+                                 x1, x2,
+                                 pjet1, pjet2, pjet3, phiggs)
