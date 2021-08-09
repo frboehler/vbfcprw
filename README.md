@@ -1,4 +1,4 @@
-This is a RootCore-compliant wrapper around Fortran-routines written by M. Schumacher using routines from HAWK (https://hawk.hepforge.org). 
+This is a wrapper around Fortran-routines written by M. Schumacher using routines from HAWK (https://hawk.hepforge.org). 
 The module `hawkroutines` contains the bare fortran interface. The relevant subroutines are mirrored in the `vbfcprw` module with docstrings: `optobs`, `weightdtilde`, `reweight`.
 
 The module `vbfcprw` additionally contains more convenient object-style interfaces `OptimalObservable` and `WeightDtilde`
@@ -7,6 +7,10 @@ The module `vbfcprw` additionally contains more convenient object-style interfac
 
 See also `vbfcprw/test_vbfcprw.py`
 ```
+pjet1 = numpy.array([438.019730, -24.873165, -94.306022, 427.023386])               # E,px,py,pz of nth final state parton
+pjet2 = numpy.array([656.475632, -55.150478, 66.466227, -650.769506])
+phiggs= numpy.array([177.080599, 54.152473, 24.069573, -110.547404])            # E,px,py,pz of Higgs boson make sure that four-momentum conservation holds 
+
 oo = OptimalObservable([pjet1, pjet2], phiggs)
 print(f"First order OO: {oo.oo1}, Second order: {oo.o2}")
 ```
@@ -20,3 +24,4 @@ print(f"First order OO: {oo.oo1}, Second order: {oo.o2}")
 - HAWK (https://hawk.hepforge.org)
 - CT10
 - LHAPDF
+- Markus Schumacher
