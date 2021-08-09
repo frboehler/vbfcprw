@@ -1,18 +1,18 @@
 import hawkroutines
 import numpy
 from pylorentz import Momentum4
-import parton
-
-ecm = 13e3
-scale_Q = 125
-pdfdir = "."
-
-# TODO try this and print error when not available
-pdf = parton.mkPDF('CT10', 0, pdfdir=pdfdir)
+from .pdf import getPDFs2
+from .constants import ecm, scale_Q
 
 
 def rapidity(lv):
-    """calculate the rapidity of the Lorentz vector lv in z direction"""
+    """
+calculate the rapidity of the Lorentz vector lv in z direction
+Args:
+    lv (pylorentz.Momentum4)
+Returns:
+    float
+"""
     return 0.5*numpy.log((lv.e+lv.p_z)/(lv.e-lv.p_z))
 
 
@@ -59,48 +59,22 @@ Returns:
         return 1 + self.wlin*dtilde + self.wquad*dtilde**2
 
 
-def getPDFs(x1, x2, Q):
-    # pre- and appending 0s for top quarks
-    pdf1 = numpy.array([0]+[pdf.xfxQ(flavor, x1, Q) for flavor in range(-5, 6)]+[0])
-    pdf2 = numpy.array([0]+[pdf.xfxQ(flavor, x2, Q) for flavor in range(-5, 6)]+[0])
-    pdfIn = [pdf1, pdf2]
-    return pdfIn
-
-
-def getPDFs2(x1, x2, Q):
-    """
-this function is 30% faster than the one above
-    """
-    x = numpy.array([x1, x2])
-    flavors = numpy.arange(-6, 7)
-
-    def protect_top(f):
-        if abs(f) == 6:
-            return numpy.zeros(2).reshape(2, 1)
-        else:
-            return pdf.xfxQ(f, x, Q)
-
-    pdfOut = numpy.concatenate([protect_top(f) for f in flavors], axis=1)
-    return pdfOut
-
-
 class OptimalObservable:
     """object style interfacet to optimal observable function"""
 
-    def __init__(self, pdfIn, pjetOut, phiggs):
+    def __init__(self, pjetOut, phiggs):
         """
 Args:
-    pdfIn (list[numpy.array[float]]): PDFs of incoming partons
     pjetOut (list[numpy.array[float]]): 4-moms of outgoin jets (E, Px, Py, Pz)
     phiggs (numpy.array[float]): 4-mom of Higgs boson (E, Px, Py, Pz)
 
 """
-        assert len(pdfIn) == 2
         assert len(pjetOut) == 2
 
         lv = Momentum4(*phiggs)
+        mH = lv.m
         if scale_Q == "mH":
-            Q = lv.m
+            Q = mH
         else:
             Q = scale_Q
         for pjet in pjetOut:
@@ -108,6 +82,7 @@ Args:
         x1 = lv.m/ecm*numpy.exp(rapidity(lv))
         x2 = lv.m/ecm*numpy.exp(-1*rapidity(lv))
 
+        # pdfIn (list[numpy.array[float]]): PDFs of incoming partons
         pdfIn = getPDFs2(x1, x2, Q)
 
         # self.oo1, self.oo2, ierr = 1,1,1
@@ -120,6 +95,10 @@ Args:
         if ierr:
             raise RuntimeError("Something wrong in weightdtilde: ierr = %s" % ierr)
 
+
+# ################################################ #
+# 1-to-1 interface to hawkroutines with docstrings #
+# ################################################ #
 
 def optobs(ecm, mH, x1, x2, pdf1, pdf2, pjet1, pjet2, phiggs):
     """
@@ -179,43 +158,4 @@ Returns:
                                      phiggs)
 
 
-
-
-pjet1 = numpy.array([438.019730, -24.873165, -94.306022, 427.023386])               # E,px,py,pz of nth final state parton
-pjet2 = numpy.array([656.475632, -55.150478, 66.466227, -650.769506])
-pjet3 = numpy.array([51.082110, 25.871174, 3.770224, 43.884504])
-phiggs= numpy.array([177.080599, 54.152473, 24.069573, -110.547404])            # E,px,py,pz of Higgs boson make sure that four-momentum conservation holds 
-ecm = 13000.;                           #proton-proton center-of mass energy in GeV
-mH = 124.999901;                       #mass of Higgs boson in Gev
-npafin = 3;                            #number of partons in final state  either  2 or 3
-x1 = 0.072082;                  #Bjorken x of incoming partons, 1 in + z , 2 in -z direction
-x2 = 0.123500;
-Q = 84000;
-flavour1In = -2;                          #flavour of incoming/outgoing parton n
-flavour2In = 2;                           #flavour assignment: t = 6  b = 5 c = 4, s = 3, u = 2, d = 1   
-flavour1Out = -2;                         #anti-qarks with negative sign
-flavour2Out = 2;                          #gluon = 0 
-flavour3Out = 0;
-eventNumber = 1234;
-
-# Only used when ran without the Event-store:
-pdf1 = numpy.array([0, 0.0391232, 0.0541232, 0.0845228, 0.105186,  0.129429,  0.86471,  0.345418, 0.561297, 0.0845228, 0.0541232, 0.0391232, 0])  #from -6 to 6: pdfs for 1st parton
-pdf2 = numpy.array([0, 0.0143834, 0.0205766, 0.0334123, 0.0462144, 0.0601489, 0.345621, 0.246406, 0.468401, 0.0334123, 0.0205766, 0.0143834, 0])  #from -6 to 6: pdfs for 2nd parton
-
-def test1():
-    print(hawkroutines.weightdtilde(ecm, mH, npafin, flavour1In, flavour2In, flavour1Out, flavour2Out, flavour3Out, x1, x2, pjet1, pjet2, pjet3, phiggs))
-def test2():
-    print(weightdtilde(ecm, mH, npafin, flavour1In, flavour2In, flavour1Out, flavour2Out, flavour3Out, x1, x2, pjet1, pjet2, pjet3, phiggs))
-def test3():
-    w = WeightDtilde([flavour1In, flavour2In],
-                     [flavour1Out, flavour2Out, flavour3Out],
-                     [pjet1, pjet2, pjet3],
-                     phiggs)
-    print(w.eventweight())
-    return w
-def test4():
-    oo = OptimalObservable([pdf1, pdf2],
-                           [pjet1, pjet2],
-                           phiggs)
-    # print(oo.oo1, oo.oo2)
-    return oo
+# TODO interface the reweight subroutines with doc
