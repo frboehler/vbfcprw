@@ -11,14 +11,14 @@ object-style interfaces `OptimalObservable` and `WeightDtilde`
 
 See also `vbfcprw/test_vbfcprw.py`
 ```
-import vbfcprw
+import vbfcprw, numpy
 
 pjet1 = numpy.array([438.019730, -24.873165, -94.306022, 427.023386])  # E,px,py,pz of nth final state parton
 pjet2 = numpy.array([656.475632, -55.150478, 66.466227, -650.769506])
 phiggs= numpy.array([177.080599, 54.152473, 24.069573, -110.547404])   # E,px,py,pz of Higgs boson make sure that four-momentum conservation holds 
 
 oo = vbfcprw.OptimalObservable([pjet1, pjet2], phiggs)
-print(f"First order OO: {oo.oo1}, Second order: {oo.o2}")
+print(f"First order OO: {oo.oo1}, Second order: {oo.oo2}")
 ```
 
 # Requirements
