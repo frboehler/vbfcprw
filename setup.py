@@ -26,6 +26,15 @@ setup(
     description="wrapper for simplified CP reweighting using HAWK generator",
     long_description=long_description,
     long_description_content_type="text/markdown",
+    include_package_data=True,
+    # package_data={
+    #     "vbfcprw": ["vbfcprw/data/CT10/CT10.info",
+    #                 "vbfcprw/data/CT10/CT10_0000.dat"]
+    # },
+    # I think the above doesnt work because of the numpy.distutils flavour, but not sure.
+    data_files=[("vbfcprw/data/CT10", ["vbfcprw/data/CT10/CT10.info",
+                                       "vbfcprw/data/CT10/CT10_0000.dat"])
+                ],
 )
 
 # manually this works too

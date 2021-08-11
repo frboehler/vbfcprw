@@ -1,7 +1,9 @@
 import parton as _parton
 import numpy as _numpy
+import pkg_resources as _pkg_resources
 
-pdfdir = "."
+pdfdir = _pkg_resources.resource_filename(__name__, "data")
+# pdfdir = "."
 
 # TODO try this and print error when not available
 # pdf = parton.mkPDF(name='CT10', member=0, pdfdir=pdfdir)
