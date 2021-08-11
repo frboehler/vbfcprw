@@ -43,3 +43,5 @@ setup(
 # python setup.py build
 # python setup.py bdist_wheel
 # python setup.py install
+# or
+# python -m build
