@@ -35,6 +35,11 @@ setup(
     data_files=[("vbfcprw/data/CT10", ["vbfcprw/data/CT10/CT10.info",
                                        "vbfcprw/data/CT10/CT10_0000.dat"])
                 ],
+    classifiers=["Intended Audience :: Science/Research",
+                 "License :: OSI Approved :: MIT License",
+                 "Programming Language :: Fortran",
+                 "Topic :: Scientific/Engineering :: Physics"],
+    license="MIT",
 )
 
 # manually this works too
