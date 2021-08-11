@@ -24,7 +24,7 @@ print(f"First order OO: {oo.oo1}, Second order: {oo.oo2}")
 # Requirements
 
 If the wheel is incompatible:
-- Fortran compiler
+- Fortran compiler (e.g. gfortran)
 
 # References
 - [HAWK](https://hawk.hepforge.org)
