@@ -16,7 +16,7 @@ ext1 = Extension(
 #--------------------------------------------------------------------------
 setup(
     name='vbfcprw',
-    version='0.2',
+    version='0.1',
     ext_modules=[ext1],
     packages=['vbfcprw'],
     install_requires=["numpy", "pylorentz", "parton"],
