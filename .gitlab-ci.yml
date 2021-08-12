@@ -17,3 +17,4 @@ linux:
   artifacts:
     paths:
       - wheelhouse/
+  when: never
