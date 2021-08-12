@@ -19,7 +19,7 @@ setup(
     version='0.1',
     ext_modules=[ext1],
     packages=['vbfcprw'],
-    install_requires=["numpy", "pylorentz", "parton"],
+    install_requires=["numpy>=1.21.1", "pylorentz", "parton"],
     author="David Hohn",
     author_email="hohn.david@gmail.com",
     url="https://gitlab.cern.ch/FreiburgSchumacher/vbfcp/HLeptonsCPRW",
@@ -41,12 +41,3 @@ setup(
                  "Topic :: Scientific/Engineering :: Physics"],
     license="MIT",
 )
-
-# manually this works too
-# python -m numpy.f2py -c Root/*.f -m hawkroutines
-# howto
-# python setup.py build
-# python setup.py bdist_wheel
-# python setup.py install
-# or
-# python -m build
