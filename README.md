@@ -10,7 +10,7 @@ object-style interfaces `OptimalObservable` and `WeightDtilde`
 # Examples 
 
 See also `vbfcprw/test_vbfcprw.py`
-```
+```py
 import vbfcprw, numpy
 
 pjet1 = numpy.array([438.019730, -24.873165, -94.306022, 427.023386])  # E,px,py,pz of nth final state parton
@@ -24,7 +24,7 @@ print(f"First order OO: {oo.oo1}, Second order: {oo.oo2}")
 # Requirements
 
 If the wheel is incompatible:
-- Fortran compiler (e.g. gfortran)
+- Fortran and C compiler (e.g. gfortran in gcc)
 
 # References
 - [HAWK](https://hawk.hepforge.org)
