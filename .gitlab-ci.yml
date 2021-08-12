@@ -17,4 +17,4 @@ linux:
   artifacts:
     paths:
       - wheelhouse/
-  when: never
+  when: manual
