@@ -16,13 +16,13 @@ ext1 = Extension(
 #--------------------------------------------------------------------------
 setup(
     name='vbfcprw',
-    version='0.1',
+    version='0.2',
     ext_modules=[ext1],
     packages=['vbfcprw'],
     install_requires=["numpy>=1.21.1", "pylorentz", "parton"],
     author="David Hohn",
     author_email="hohn.david@gmail.com",
-    url="https://gitlab.cern.ch/FreiburgSchumacher/vbfcp/HLeptonsCPRW",
+    url="https://github.com/dhohn/vbfcprw",
     description="wrapper for simplified CP reweighting using HAWK generator",
     long_description=long_description,
     long_description_content_type="text/markdown",
