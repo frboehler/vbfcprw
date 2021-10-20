@@ -1,7 +1,7 @@
 import hawkroutines
 import numpy as _numpy
 from pylorentz import Momentum4 as _Momentum4
-from .pdf import getPDFs2 as _getPDFs2
+from .pdf import getPDFs as _getPDFs
 import vbfcprw.constants as _constants
 
 
@@ -83,7 +83,7 @@ Args:
         x2 = lv.m/_constants.ecm*_numpy.exp(-1*_rapidity(lv))
 
         # pdfIn (list[_numpy.array[float]]): PDFs of incoming partons
-        pdfIn = _getPDFs2(x1, x2, Q)
+        pdfIn = _getPDFs(x1, x2, Q)
 
         # self.oo1, self.oo2, ierr = 1,1,1
         self.oo1, self.oo2, ierr = optobs(_constants.ecm, mH,
